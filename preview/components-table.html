@@ -6,31 +6,36 @@
 <link rel="stylesheet" href="../colors_and_type.css">
 <style>
   html,body{margin:0;padding:24px 28px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
-  table{width:100%;border-collapse:collapse;font-size:13px;}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .table-wrap::-webkit-scrollbar{display:none;}
+  table{width:100%;min-width:420px;border-collapse:collapse;font-size:13px;}
   th{text-align:left;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-3);padding:10px 12px;border-bottom:1px solid var(--border-default);background:var(--bg-subtle);}
   td{padding:12px;border-bottom:1px solid var(--border-subtle);color:var(--fg-1);vertical-align:middle;}
   tr:hover td{background:var(--color-aqua-50);}
-  .pn{font-family:var(--font-mono);color:var(--fg-2);font-size:12px;}
+  .pn{font-family:var(--font-mono);color:var(--fg-2);font-size:12px;white-space:nowrap;}
   .name{font-weight:600;}
   .qty{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;}
-  .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;}
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;}
   .ok{background:#E1F4EB;color:#1F7A55;}
   .ok .d{width:5px;height:5px;border-radius:50%;background:#2E9E6E;}
   .low{background:#FCEFD8;color:#A56712;}
   .low .d{width:5px;height:5px;border-radius:50%;background:#E9A23B;}
+  @media(max-width:500px){html,body{padding:16px 12px;}}
 </style>
 </head>
 <body>
-  <table>
-    <thead>
-      <tr><th>Part #</th><th>Description</th><th style="text-align:right">Qty</th><th>Status</th></tr>
-    </thead>
-    <tbody>
-      <tr><td class="pn">HX-4471-A</td><td class="name">Impeller, 6-vane stainless</td><td class="qty">02</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
-      <tr><td class="pn">HX-4480-C</td><td class="name">Mechanical seal kit</td><td class="qty">12</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
-      <tr><td class="pn">HX-4502-B</td><td class="name">Shaft sleeve, hardened</td><td class="qty">01</td><td><span class="tag low"><span class="d"></span>Low stock</span></td></tr>
-      <tr><td class="pn">HX-4519-A</td><td class="name">O-ring, Viton 70A</td><td class="qty">48</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
-    </tbody>
-  </table>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Part #</th><th>Description</th><th style="text-align:right">Qty</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="pn">HX-4471-A</td><td class="name">Impeller, 6-vane stainless</td><td class="qty">02</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
+        <tr><td class="pn">HX-4480-C</td><td class="name">Mechanical seal kit</td><td class="qty">12</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
+        <tr><td class="pn">HX-4502-B</td><td class="name">Shaft sleeve, hardened</td><td class="qty">01</td><td><span class="tag low"><span class="d"></span>Low stock</span></td></tr>
+        <tr><td class="pn">HX-4519-A</td><td class="name">O-ring, Viton 70A</td><td class="qty">48</td><td><span class="tag ok"><span class="d"></span>In stock</span></td></tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>
