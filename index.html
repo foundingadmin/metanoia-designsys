@@ -227,6 +227,91 @@ body {
   font-size: var(--fs-12); color: var(--fg-3); font-weight: var(--fw-medium);
   letter-spacing: 0.03em;
 }
+
+/* ── Hamburger button (hidden on desktop) ── */
+.ds-menu-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  background: transparent; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.75); border-radius: var(--radius-md);
+  transition: background var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+  flex-shrink: 0;
+}
+.ds-menu-btn:hover { background: rgba(255,255,255,0.10); color: #fff; }
+.ds-menu-btn i { width: 20px; height: 20px; }
+
+/* ── Sidebar overlay (mobile drawer backdrop) ── */
+.ds-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 64px 0 0 0;
+  background: rgba(9,17,42,0.45);
+  z-index: 199;
+  backdrop-filter: none;
+}
+.ds-sidebar-overlay.open { display: block; }
+
+/* ── Tablet: 768–1024px ── */
+@media (max-width: 1024px) {
+  .ds-main { padding: 40px 36px 80px; }
+  .card-grid.cols-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .card-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Mobile: < 768px ── */
+@media (max-width: 767px) {
+  /* Header */
+  .ds-header { padding: 0 16px; gap: 8px; }
+  .ds-header-pipe,
+  .ds-header-sub,
+  .ds-updated { display: none; }
+  .ds-version-pill { margin-left: auto; }
+  .ds-menu-btn { display: flex; margin-left: 8px; }
+
+  /* Sidebar → slide-in drawer */
+  .ds-sidebar {
+    position: fixed;
+    top: 64px; left: 0;
+    width: 260px;
+    height: calc(100vh - 64px);
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform var(--dur-base) var(--ease-standard);
+    box-shadow: 4px 0 24px rgba(9,17,42,0.18);
+  }
+  .ds-sidebar.open { transform: translateX(0); }
+
+  /* Main */
+  .ds-main { padding: 24px 16px 64px; }
+
+  /* Card grids → single column */
+  .card-grid.cols-2,
+  .card-grid.cols-3,
+  .card-grid.cols-4 { grid-template-columns: 1fr; }
+
+  /* Stats strip → horizontal scroll */
+  .ds-stats {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    margin-bottom: 36px;
+  }
+  .ds-stats::-webkit-scrollbar { display: none; }
+  .ds-stat { flex: 0 0 auto; min-width: 112px; padding: 16px 18px; }
+
+  /* Section spacing */
+  .ds-section { margin-bottom: 48px; }
+}
+
+/* ── Very small screens ── */
+@media (max-width: 359px) {
+  .ds-wordmark { font-size: var(--fs-16); }
+}
 </style>
 </head>
 <body>
@@ -241,10 +326,16 @@ body {
     <span id="version-text">v1.1.0</span>
   </a>
   <span class="ds-updated" id="last-updated">Updated May 6, 2025</span>
+  <button class="ds-menu-btn" id="menu-btn" aria-label="Open navigation" aria-expanded="false">
+    <i data-lucide="menu"></i>
+  </button>
 </header>
 
 <!-- ── LAYOUT ── -->
 <div class="ds-layout">
+
+  <!-- Mobile overlay (closes drawer on tap) -->
+  <div class="ds-sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
 
   <!-- SIDEBAR -->
   <aside class="ds-sidebar" id="sidebar"></aside>
@@ -280,8 +371,8 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.1.0';
-const LAST_UPDATED = 'May 6, 2025';
+const VERSION      = '1.1.1';
+const LAST_UPDATED = 'May 6, 2026';
 
 /* ================================================================
    CHANGELOG
@@ -289,6 +380,16 @@ const LAST_UPDATED = 'May 6, 2025';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.1.1',
+    date: '2026-05-06',
+    type: 'patch',
+    changes: [
+      'Made index.html fully responsive: mobile drawer sidebar with hamburger toggle, single-column card grids on mobile, horizontal-scroll stats strip, reduced padding at small viewports',
+      'Added tablet breakpoints: 3/4-col grids collapse to 2 cols at ≤900–1024px',
+      'Sidebar drawer closes on overlay tap, sidebar link click, Escape key, and resize-to-desktop',
+    ],
+  },
   {
     version: '1.1.0',
     date: '2025-05-06',
@@ -525,6 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
   buildChangelog();
   initScrollspy();
   initIframeLazy();
+  initMobileNav();
 
   lucide.createIcons();
 });
@@ -675,6 +777,54 @@ function fitIframe(iframe) {
   };
   setTimeout(tryFit, 80);
   setTimeout(tryFit, 400);
+}
+
+/* ── Mobile sidebar drawer ── */
+function initMobileNav() {
+  const menuBtn = document.getElementById('menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.innerHTML = '<i data-lucide="x"></i>';
+    lucide.createIcons();
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+    lucide.createIcons();
+  }
+
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  sidebar.addEventListener('click', e => {
+    if (e.target.closest('.sidebar-item') && window.innerWidth < 768) closeSidebar();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+  });
+
+  // Re-enable scroll if resized to desktop while drawer is open
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
 }
 
 /* ── Util ── */
