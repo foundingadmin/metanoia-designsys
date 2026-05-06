@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Empty States</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  html,body{margin:0;padding:24px 28px;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
+  .section-label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);margin:0 0 12px;}
+  .demo{margin-bottom:28px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+  /* ── Empty state base ── */
+  .empty{
+    background:var(--bg-canvas);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--radius-xl);
+    padding:48px 32px;
+    text-align:center;
+    display:flex;flex-direction:column;align-items:center;
+  }
+
+  /* Icon container */
+  .empty-icon{
+    width:56px;height:56px;border-radius:var(--radius-lg);
+    background:var(--bg-subtle);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;flex-shrink:0;
+  }
+  .empty-icon i{width:28px;height:28px;color:var(--fg-4);}
+  .empty-icon.navy{background:var(--color-navy-100);}
+  .empty-icon.navy i{color:var(--color-navy);}
+  .empty-icon.aqua{background:var(--color-aqua-50);}
+  .empty-icon.aqua i{color:var(--color-aqua-700);}
+
+  /* Text */
+  .empty-title{
+    font-size:var(--fs-16);font-weight:var(--fw-semibold);
+    color:var(--fg-1);margin:0 0 6px;line-height:var(--lh-snug);
+  }
+  .empty-body{
+    font-size:var(--fs-13);color:var(--fg-3);
+    line-height:var(--lh-relaxed);margin:0 0 20px;
+    max-width:28em;
+  }
+  .empty-body:last-child{margin-bottom:0;}
+
+  /* Actions */
+  .btn{
+    font-family:inherit;font-size:var(--fs-13);font-weight:var(--fw-semibold);
+    border-radius:var(--radius-md);padding:8px 16px;cursor:pointer;border:1px solid transparent;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:background var(--dur-fast) var(--ease-standard);
+  }
+  .btn-primary{background:var(--color-navy);color:#fff;}
+  .btn-primary:hover{background:#0A5689;}
+  .btn-ghost{background:transparent;color:var(--fg-2);border-color:var(--border-default);}
+  .btn-ghost:hover{background:var(--bg-subtle);}
+  .btn i{width:14px;height:14px;}
+  .empty-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+
+  /* ── Search empty (inline / in a table context) ── */
+  .empty-inline{
+    background:var(--bg-canvas);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--radius-lg);
+    padding:40px 24px;
+    text-align:center;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .empty-inline .empty-icon{width:44px;height:44px;margin-bottom:12px;}
+  .empty-inline .empty-title{font-size:var(--fs-14);}
+  .empty-inline .empty-body{font-size:var(--fs-13);margin-bottom:0;}
+
+  /* ── Loading skeleton ── */
+  .skeleton{
+    background:var(--bg-canvas);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--radius-xl);
+    padding:24px;
+  }
+  .skel-line{
+    height:14px;border-radius:var(--radius-sm);
+    background:linear-gradient(90deg, var(--bg-muted) 25%, var(--bg-subtle) 50%, var(--bg-muted) 75%);
+    background-size:200% 100%;
+    animation:shimmer 1.4s ease-in-out infinite;
+    margin-bottom:10px;
+  }
+  .skel-line:last-child{margin-bottom:0;}
+  @keyframes shimmer{
+    0%{background-position:200% 0;}
+    100%{background-position:-200% 0;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- First-use / onboarding empty -->
+  <div class="demo">
+    <p class="section-label">First-use — onboarding</p>
+    <div class="empty">
+      <div class="empty-icon navy"><i data-lucide="package"></i></div>
+      <p class="empty-title">No assets in your catalog yet</p>
+      <p class="empty-body">Add your first asset to get started. You can import a parts book, upload an existing BOM, or create an asset manually.</p>
+      <div class="empty-actions">
+        <button class="btn btn-primary"><i data-lucide="upload"></i>Import parts book</button>
+        <button class="btn btn-ghost"><i data-lucide="plus"></i>Add manually</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search / filter no results + error -->
+  <div class="demo">
+    <p class="section-label">No results + error states</p>
+    <div class="grid">
+      <div class="empty-inline">
+        <div class="empty-icon"><i data-lucide="search"></i></div>
+        <p class="empty-title">No parts match "HX-99"</p>
+        <p class="empty-body">Try a different part number, description, or clear your filters.</p>
+      </div>
+      <div class="empty-inline">
+        <div class="empty-icon" style="background:#FDECEA;"><i data-lucide="alert-circle" style="color:var(--color-error);"></i></div>
+        <p class="empty-title">Failed to load catalog</p>
+        <p class="empty-body">There was a problem fetching asset data. Check your connection and try again.</p>
+        <div style="margin-top:14px;">
+          <button class="btn btn-ghost"><i data-lucide="refresh-cw"></i>Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- iBOM viewer empty -->
+  <div class="demo">
+    <p class="section-label">iBOM viewer — no document selected</p>
+    <div class="empty">
+      <div class="empty-icon aqua"><i data-lucide="file-text"></i></div>
+      <p class="empty-title">Select an asset to view its iBOM</p>
+      <p class="empty-body">Choose an asset from the catalog panel on the left to load its Interactive Bill of Materials here.</p>
+    </div>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div class="demo">
+    <p class="section-label">Loading skeleton</p>
+    <div class="skeleton">
+      <div class="skel-line" style="width:40%;height:18px;margin-bottom:16px;"></div>
+      <div class="skel-line" style="width:100%;"></div>
+      <div class="skel-line" style="width:88%;"></div>
+      <div class="skel-line" style="width:94%;"></div>
+      <div class="skel-line" style="width:72%;margin-bottom:0;"></div>
+    </div>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pagination</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  html,body{margin:0;padding:24px 28px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
+  .section-label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);margin:0 0 12px;}
+  .demo{margin-bottom:32px;}
+
+  /* ── Base pagination ── */
+  .pagination{
+    display:flex;align-items:center;gap:2px;
+    list-style:none;margin:0;padding:0;
+  }
+  .page-btn{
+    min-width:36px;height:36px;padding:0 6px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:inherit;font-size:var(--fs-13);font-weight:var(--fw-medium);
+    color:var(--fg-2);background:transparent;border:1px solid transparent;
+    border-radius:var(--radius-md);cursor:pointer;
+    transition:background var(--dur-fast) var(--ease-standard),
+               color var(--dur-fast) var(--ease-standard),
+               border-color var(--dur-fast) var(--ease-standard);
+  }
+  .page-btn:hover{background:var(--bg-subtle);color:var(--fg-1);}
+  .page-btn.active{
+    background:var(--color-navy);color:#fff;border-color:var(--color-navy);
+    font-weight:var(--fw-semibold);
+  }
+  .page-btn:disabled{opacity:0.38;cursor:default;pointer-events:none;}
+  .page-btn.nav-btn{color:var(--fg-3);}
+  .page-btn.nav-btn i{width:16px;height:16px;}
+  .page-ellipsis{
+    min-width:36px;height:36px;display:inline-flex;
+    align-items:center;justify-content:center;
+    font-size:var(--fs-13);color:var(--fg-4);user-select:none;
+  }
+
+  /* ── Full pagination row ── */
+  .pagination-row{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+  }
+  .pagination-info{font-size:var(--fs-13);color:var(--fg-3);}
+  .pagination-per-page{
+    display:flex;align-items:center;gap:8px;
+    font-size:var(--fs-13);color:var(--fg-3);
+  }
+  .page-select{
+    font-family:inherit;font-size:var(--fs-13);
+    border:1px solid var(--border-default);border-radius:var(--radius-md);
+    padding:5px 10px 5px 8px;color:var(--fg-1);background:var(--bg-canvas);
+    cursor:pointer;outline:none;
+    transition:border-color var(--dur-fast) var(--ease-standard);
+  }
+  .page-select:focus{border-color:var(--color-aqua);box-shadow:var(--shadow-focus);}
+
+  /* ── Simple prev/next ── */
+  .pagination-simple{display:flex;align-items:center;gap:8px;}
+  .btn-outline{
+    font-family:inherit;font-size:var(--fs-13);font-weight:var(--fw-medium);
+    border:1px solid var(--border-default);border-radius:var(--radius-md);
+    padding:7px 14px;color:var(--fg-1);background:var(--bg-canvas);cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:background var(--dur-fast) var(--ease-standard),
+               border-color var(--dur-fast) var(--ease-standard);
+  }
+  .btn-outline:hover{background:var(--bg-subtle);border-color:var(--border-strong);}
+  .btn-outline:disabled{opacity:0.38;cursor:default;pointer-events:none;}
+  .btn-outline i{width:14px;height:14px;}
+
+  /* ── Compact ── */
+  .pagination-compact .page-btn{min-width:30px;height:30px;font-size:var(--fs-12);}
+  .pagination-compact .page-ellipsis{min-width:30px;height:30px;font-size:var(--fs-12);}
+
+  /* ── Divider ── */
+  .divider{height:1px;background:var(--border-subtle);margin:0 0 28px;}
+</style>
+</head>
+<body>
+
+  <!-- Standard numbered pagination -->
+  <div class="demo">
+    <p class="section-label">Numbered pagination</p>
+    <nav aria-label="pagination">
+      <ol class="pagination">
+        <li><button class="page-btn nav-btn" disabled><i data-lucide="chevron-left"></i></button></li>
+        <li><button class="page-btn active">1</button></li>
+        <li><button class="page-btn">2</button></li>
+        <li><button class="page-btn">3</button></li>
+        <li><span class="page-ellipsis">…</span></li>
+        <li><button class="page-btn">18</button></li>
+        <li><button class="page-btn">19</button></li>
+        <li><button class="page-btn nav-btn"><i data-lucide="chevron-right"></i></button></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Mid-range active -->
+  <div class="demo">
+    <p class="section-label">Mid-range active page</p>
+    <nav aria-label="pagination">
+      <ol class="pagination">
+        <li><button class="page-btn nav-btn"><i data-lucide="chevron-left"></i></button></li>
+        <li><button class="page-btn">1</button></li>
+        <li><span class="page-ellipsis">…</span></li>
+        <li><button class="page-btn">7</button></li>
+        <li><button class="page-btn active">8</button></li>
+        <li><button class="page-btn">9</button></li>
+        <li><span class="page-ellipsis">…</span></li>
+        <li><button class="page-btn">19</button></li>
+        <li><button class="page-btn nav-btn"><i data-lucide="chevron-right"></i></button></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Full pagination row with info + per-page -->
+  <div class="demo">
+    <p class="section-label">Full table footer — with row count and per-page selector</p>
+    <div class="pagination-row">
+      <span class="pagination-info">Showing <strong>1–25</strong> of <strong>248</strong> parts</span>
+      <nav aria-label="pagination">
+        <ol class="pagination">
+          <li><button class="page-btn nav-btn" disabled><i data-lucide="chevron-left"></i></button></li>
+          <li><button class="page-btn active">1</button></li>
+          <li><button class="page-btn">2</button></li>
+          <li><button class="page-btn">3</button></li>
+          <li><span class="page-ellipsis">…</span></li>
+          <li><button class="page-btn">10</button></li>
+          <li><button class="page-btn nav-btn"><i data-lucide="chevron-right"></i></button></li>
+        </ol>
+      </nav>
+      <div class="pagination-per-page">
+        Rows per page
+        <select class="page-select">
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple prev/next -->
+  <div class="demo">
+    <p class="section-label">Simple prev / next</p>
+    <div class="pagination-simple">
+      <button class="btn-outline" disabled><i data-lucide="arrow-left"></i>Previous</button>
+      <span style="font-size:var(--fs-13);color:var(--fg-3);">Page 1 of 10</span>
+      <button class="btn-outline">Next<i data-lucide="arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Compact -->
+  <div class="demo">
+    <p class="section-label">Compact (dense UI)</p>
+    <nav aria-label="pagination">
+      <ol class="pagination pagination-compact">
+        <li><button class="page-btn nav-btn"><i data-lucide="chevron-left"></i></button></li>
+        <li><button class="page-btn">1</button></li>
+        <li><button class="page-btn active">2</button></li>
+        <li><button class="page-btn">3</button></li>
+        <li><button class="page-btn">4</button></li>
+        <li><button class="page-btn">5</button></li>
+        <li><button class="page-btn nav-btn"><i data-lucide="chevron-right"></i></button></li>
+      </ol>
+    </nav>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

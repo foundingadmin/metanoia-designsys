@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Breadcrumb</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  html,body{margin:0;padding:24px 28px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
+  .section-label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);margin:0 0 12px;}
+  .demo{margin-bottom:28px;}
+
+  /* ── Breadcrumb base ── */
+  .breadcrumb{
+    display:flex;align-items:center;gap:0;flex-wrap:wrap;
+    list-style:none;margin:0;padding:0;
+  }
+  .breadcrumb li{display:flex;align-items:center;}
+  .breadcrumb a{
+    font-size:var(--fs-13);color:var(--fg-3);text-decoration:none;
+    padding:3px 4px;border-radius:var(--radius-sm);
+    transition:color var(--dur-fast) var(--ease-standard),
+               background var(--dur-fast) var(--ease-standard);
+  }
+  .breadcrumb a:hover{color:var(--fg-link);background:var(--color-aqua-50);}
+  .breadcrumb .sep{
+    display:flex;align-items:center;
+    color:var(--fg-4);margin:0 2px;
+  }
+  .breadcrumb .sep i{width:14px;height:14px;}
+  .breadcrumb .current{
+    font-size:var(--fs-13);font-weight:var(--fw-medium);
+    color:var(--fg-1);padding:3px 4px;
+  }
+
+  /* ── With home icon ── */
+  .breadcrumb .home{
+    display:flex;align-items:center;
+    color:var(--fg-3);padding:3px 4px;border-radius:var(--radius-sm);
+    transition:color var(--dur-fast) var(--ease-standard),
+               background var(--dur-fast) var(--ease-standard);
+  }
+  .breadcrumb .home:hover{color:var(--fg-link);background:var(--color-aqua-50);}
+
+  /* ── Breadcrumb on dark ── */
+  .dark-swatch{background:var(--color-navy);border-radius:var(--radius-lg);padding:20px 20px;}
+  .dark-swatch .breadcrumb a{color:rgba(255,255,255,0.55);}
+  .dark-swatch .breadcrumb a:hover{color:#fff;background:rgba(255,255,255,0.08);}
+  .dark-swatch .breadcrumb .sep{color:rgba(255,255,255,0.25);}
+  .dark-swatch .breadcrumb .current{color:#fff;}
+  .dark-swatch .breadcrumb .home{color:rgba(255,255,255,0.55);}
+  .dark-swatch .breadcrumb .home:hover{color:#fff;background:rgba(255,255,255,0.08);}
+
+  /* ── Breadcrumb with slash separator ── */
+  .breadcrumb.slash .sep{margin:0 4px;font-size:var(--fs-13);color:var(--fg-4);}
+
+  /* ── Page header context ── */
+  .page-header{
+    border:1px solid var(--border-subtle);border-radius:var(--radius-lg);
+    padding:20px 24px;background:var(--bg-canvas);
+  }
+  .page-header h1{
+    font-size:var(--fs-24);font-weight:var(--fw-bold);color:var(--fg-1);
+    margin:8px 0 4px;letter-spacing:var(--ls-snug);line-height:var(--lh-snug);
+  }
+  .page-header p{font-size:var(--fs-13);color:var(--fg-3);margin:0;}
+</style>
+</head>
+<body>
+
+  <!-- Default chevron separator -->
+  <div class="demo">
+    <p class="section-label">Default — chevron separator</p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="#">AIC</a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Asset Catalog</a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Rotating Equipment</a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><span class="current">HX-4471-A</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- With home icon -->
+  <div class="demo">
+    <p class="section-label">With home icon</p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li><a class="home" href="#"><i data-lucide="home" style="width:15px;height:15px;"></i></a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">iBOM Viewer</a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Pump Station 3</a></li>
+        <li><span class="sep"><i data-lucide="chevron-right"></i></span><span class="current">Centrifugal Pump Assembly</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Slash separator -->
+  <div class="demo">
+    <p class="section-label">Slash separator</p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb slash">
+        <li><a href="#">AIC</a></li>
+        <li><span class="sep">/</span><a href="#">Reports</a></li>
+        <li><span class="sep">/</span><span class="current">Q1 Maintenance Summary</span></li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- On dark background -->
+  <div class="demo">
+    <p class="section-label">Dark surface</p>
+    <div class="dark-swatch">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li><a class="home" href="#"><i data-lucide="home" style="width:15px;height:15px;"></i></a></li>
+          <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Asset Catalog</a></li>
+          <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Mechanical</a></li>
+          <li><span class="sep"><i data-lucide="chevron-right"></i></span><span class="current">HX-4471-A</span></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- In context — page header -->
+  <div class="demo">
+    <p class="section-label">In context — page header</p>
+    <div class="page-header">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li><a href="#">Asset Catalog</a></li>
+          <li><span class="sep"><i data-lucide="chevron-right"></i></span><a href="#">Rotating Equipment</a></li>
+          <li><span class="sep"><i data-lucide="chevron-right"></i></span><span class="current">HX-4471-A</span></li>
+        </ol>
+      </nav>
+      <h1>Impeller, 6-vane stainless</h1>
+      <p>Part number HX-4471-A · Rotating Equipment · Last updated 14 Apr 2025</p>
+    </div>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

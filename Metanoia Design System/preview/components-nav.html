@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Navigation</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  html,body{margin:0;padding:0;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
+
+  /* ── Top Nav — light variant ── */
+  .nav{
+    height:64px;background:var(--bg-canvas);
+    border-bottom:1px solid var(--border-subtle);
+    display:flex;align-items:center;gap:0;
+    padding:0 32px;
+    box-shadow:var(--shadow-xs);
+    position:sticky;top:0;z-index:100;
+  }
+  .nav-logo{
+    display:flex;align-items:center;gap:10px;
+    text-decoration:none;flex-shrink:0;margin-right:32px;
+  }
+  .nav-logo img{height:28px;width:auto;}
+  .nav-links{
+    display:flex;align-items:center;gap:2px;flex:1;
+  }
+  .nav-link{
+    font-size:var(--fs-14);font-weight:var(--fw-medium);
+    color:var(--fg-2);text-decoration:none;
+    padding:6px 12px;border-radius:var(--radius-md);
+    transition:background var(--dur-fast) var(--ease-standard),
+               color var(--dur-fast) var(--ease-standard);
+    display:flex;align-items:center;gap:6px;white-space:nowrap;
+  }
+  .nav-link:hover{background:var(--bg-subtle);color:var(--fg-1);}
+  .nav-link.active{background:var(--color-aqua-50);color:var(--color-navy);font-weight:var(--fw-semibold);}
+  .nav-link i{width:16px;height:16px;flex-shrink:0;}
+  .nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+  .nav-search{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg-subtle);border:1px solid var(--border-subtle);
+    border-radius:var(--radius-md);padding:7px 12px;
+    font-size:var(--fs-13);color:var(--fg-3);
+    width:200px;cursor:text;
+    transition:border-color var(--dur-fast) var(--ease-standard),
+               box-shadow var(--dur-fast) var(--ease-standard);
+  }
+  .nav-search:hover{border-color:var(--border-default);}
+  .nav-icon-btn{
+    width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+    border-radius:var(--radius-md);border:none;background:transparent;cursor:pointer;
+    color:var(--fg-3);
+    transition:background var(--dur-fast) var(--ease-standard),
+               color var(--dur-fast) var(--ease-standard);
+  }
+  .nav-icon-btn:hover{background:var(--bg-subtle);color:var(--fg-1);}
+  .nav-avatar{
+    width:32px;height:32px;border-radius:var(--radius-pill);
+    background:var(--color-navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:var(--fs-12);font-weight:var(--fw-semibold);cursor:pointer;
+    flex-shrink:0;
+  }
+
+  /* ── Top Nav — dark/inverse variant ── */
+  .nav-dark{
+    height:64px;background:var(--color-navy);
+    border-bottom:1px solid rgba(255,255,255,0.10);
+    display:flex;align-items:center;gap:0;
+    padding:0 32px;
+  }
+  .nav-dark .nav-link{color:rgba(255,255,255,0.75);}
+  .nav-dark .nav-link:hover{background:rgba(255,255,255,0.08);color:#fff;}
+  .nav-dark .nav-link.active{background:rgba(50,203,237,0.15);color:var(--color-aqua);}
+  .nav-dark .nav-search{
+    background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);
+    color:rgba(255,255,255,0.5);
+  }
+  .nav-dark .nav-icon-btn{color:rgba(255,255,255,0.6);}
+  .nav-dark .nav-icon-btn:hover{background:rgba(255,255,255,0.08);color:#fff;}
+
+  /* ── Sidebar nav ── */
+  .sidebar-demo{display:flex;margin-top:24px;background:var(--bg-canvas);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);}
+  .sidebar{
+    width:220px;flex-shrink:0;
+    background:var(--bg-subtle);
+    border-right:1px solid var(--border-subtle);
+    padding:16px 12px;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .sidebar-section{
+    font-size:var(--fs-12);font-weight:var(--fw-semibold);
+    letter-spacing:var(--ls-eyebrow);text-transform:uppercase;
+    color:var(--fg-4);padding:8px 10px 4px;margin-top:8px;
+  }
+  .sidebar-section:first-child{margin-top:0;}
+  .sidebar-link{
+    display:flex;align-items:center;gap:8px;
+    font-size:var(--fs-14);font-weight:var(--fw-medium);color:var(--fg-2);
+    text-decoration:none;padding:7px 10px;border-radius:var(--radius-md);
+    transition:background var(--dur-fast) var(--ease-standard),
+               color var(--dur-fast) var(--ease-standard);
+  }
+  .sidebar-link:hover{background:var(--bg-muted);color:var(--fg-1);}
+  .sidebar-link.active{background:var(--color-aqua-50);color:var(--color-navy);font-weight:var(--fw-semibold);}
+  .sidebar-link i{width:16px;height:16px;flex-shrink:0;opacity:0.7;}
+  .sidebar-link.active i{opacity:1;}
+  .sidebar-badge{
+    margin-left:auto;font-size:11px;font-weight:var(--fw-semibold);
+    background:var(--color-navy);color:#fff;
+    padding:1px 7px;border-radius:var(--radius-pill);
+  }
+  .sidebar-content{flex:1;padding:24px;background:var(--bg-canvas);}
+  .sidebar-content p{font-size:var(--fs-14);color:var(--fg-3);margin:0;}
+
+  /* ── Label ── */
+  .label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);padding:24px 0 10px;}
+</style>
+</head>
+<body>
+
+  <!-- Light nav -->
+  <div class="label" style="padding-left:32px;">Top nav — light</div>
+  <nav class="nav">
+    <a class="nav-logo" href="#">
+      <img src="../assets/logo-lockup-horiz.svg" alt="metanoia">
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+      <a class="nav-link active" href="#"><i data-lucide="package"></i>Asset Catalog</a>
+      <a class="nav-link" href="#"><i data-lucide="file-text"></i>iBOM Viewer</a>
+      <a class="nav-link" href="#"><i data-lucide="bar-chart-2"></i>Reports</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-search"><i data-lucide="search" style="width:14px;height:14px;"></i>Search parts…</div>
+      <button class="nav-icon-btn"><i data-lucide="bell"></i></button>
+      <button class="nav-icon-btn"><i data-lucide="settings"></i></button>
+      <div class="nav-avatar">JD</div>
+    </div>
+  </nav>
+
+  <!-- Dark/inverse nav -->
+  <div class="label" style="padding-left:32px;">Top nav — dark (inverse)</div>
+  <nav class="nav nav-dark">
+    <a class="nav-logo" href="#">
+      <img src="../assets/logo-lockup-horiz.svg" alt="metanoia" style="filter:brightness(0) invert(1);">
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+      <a class="nav-link active" href="#"><i data-lucide="package"></i>Asset Catalog</a>
+      <a class="nav-link" href="#"><i data-lucide="file-text"></i>iBOM Viewer</a>
+      <a class="nav-link" href="#"><i data-lucide="bar-chart-2"></i>Reports</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-search"><i data-lucide="search" style="width:14px;height:14px;"></i>Search parts…</div>
+      <button class="nav-icon-btn"><i data-lucide="bell"></i></button>
+      <button class="nav-icon-btn"><i data-lucide="settings"></i></button>
+      <div class="nav-avatar">JD</div>
+    </div>
+  </nav>
+
+  <!-- Sidebar nav -->
+  <div class="label" style="padding-left:32px;">Sidebar nav</div>
+  <div style="padding:0 32px 32px;">
+    <div class="sidebar-demo">
+      <nav class="sidebar">
+        <div class="sidebar-section">Workspace</div>
+        <a class="sidebar-link" href="#"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a class="sidebar-link active" href="#"><i data-lucide="package"></i>Asset Catalog<span class="sidebar-badge">4</span></a>
+        <a class="sidebar-link" href="#"><i data-lucide="file-text"></i>iBOM Viewer</a>
+        <div class="sidebar-section">Analytics</div>
+        <a class="sidebar-link" href="#"><i data-lucide="bar-chart-2"></i>Reports</a>
+        <a class="sidebar-link" href="#"><i data-lucide="activity"></i>Activity</a>
+        <div class="sidebar-section">Admin</div>
+        <a class="sidebar-link" href="#"><i data-lucide="users"></i>Team</a>
+        <a class="sidebar-link" href="#"><i data-lucide="settings"></i>Settings</a>
+      </nav>
+      <div class="sidebar-content">
+        <p>Main content area renders here.</p>
+      </div>
+    </div>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

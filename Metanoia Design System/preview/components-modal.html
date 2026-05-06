@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Modal / Dialog</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  html,body{margin:0;padding:24px 28px;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
+  .section-label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);margin:0 0 14px;}
+  .demo{margin-bottom:32px;}
+
+  /* ── Modal shell (static render — no JS overlay) ── */
+  .modal-scene{
+    background:rgba(9,75,119,0.35);
+    border-radius:var(--radius-xl);
+    padding:40px 0;
+    display:flex;align-items:flex-start;justify-content:center;
+    min-height:340px;
+  }
+
+  .modal{
+    background:var(--bg-canvas);
+    border-radius:var(--radius-xl);
+    box-shadow:var(--shadow-xl);
+    width:100%;max-width:480px;
+    overflow:hidden;
+  }
+
+  /* ── Modal header ── */
+  .modal-header{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    padding:24px 24px 0;gap:16px;
+  }
+  .modal-icon{
+    width:40px;height:40px;border-radius:var(--radius-md);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .modal-icon.navy{background:var(--color-navy-100);}
+  .modal-icon.navy i{color:var(--color-navy);}
+  .modal-icon.error{background:#FDECEA;}
+  .modal-icon.error i{color:var(--color-error);}
+  .modal-icon.success{background:#E6F6EF;}
+  .modal-icon.success i{color:var(--color-success);}
+  .modal-title-group{flex:1;}
+  .modal-title{
+    font-size:var(--fs-16);font-weight:var(--fw-semibold);
+    color:var(--fg-1);line-height:var(--lh-snug);margin:0 0 4px;
+  }
+  .modal-subtitle{font-size:var(--fs-13);color:var(--fg-3);margin:0;line-height:var(--lh-normal);}
+  .modal-close{
+    width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+    border-radius:var(--radius-md);border:none;background:transparent;cursor:pointer;
+    color:var(--fg-3);flex-shrink:0;
+    transition:background var(--dur-fast) var(--ease-standard);
+  }
+  .modal-close:hover{background:var(--bg-subtle);}
+
+  /* ── Modal body ── */
+  .modal-body{padding:16px 24px;}
+  .modal-body p{font-size:var(--fs-14);color:var(--fg-2);line-height:var(--lh-relaxed);margin:0 0 12px;}
+  .modal-body p:last-child{margin:0;}
+
+  /* ── Modal form ── */
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:var(--fs-13);font-weight:var(--fw-medium);color:var(--fg-1);margin-bottom:5px;}
+  .field input,.field select,.field textarea{
+    width:100%;font-family:inherit;font-size:var(--fs-14);
+    border:1px solid var(--border-default);border-radius:var(--radius-md);
+    padding:9px 12px;color:var(--fg-1);background:var(--bg-canvas);
+    outline:none;box-sizing:border-box;
+    transition:border-color var(--dur-fast) var(--ease-standard),
+               box-shadow var(--dur-fast) var(--ease-standard);
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    border-color:var(--color-aqua);box-shadow:var(--shadow-focus);
+  }
+  .field textarea{resize:vertical;min-height:80px;}
+
+  /* ── Modal divider ── */
+  .modal-divider{height:1px;background:var(--border-subtle);margin:0;}
+
+  /* ── Modal footer ── */
+  .modal-footer{
+    display:flex;align-items:center;justify-content:flex-end;gap:8px;
+    padding:16px 24px;
+  }
+  .modal-footer.spread{justify-content:space-between;}
+
+  /* ── Buttons (inline) ── */
+  .btn{
+    font-family:inherit;font-size:var(--fs-13);font-weight:var(--fw-semibold);
+    border-radius:var(--radius-md);padding:9px 16px;cursor:pointer;border:1px solid transparent;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:background var(--dur-fast) var(--ease-standard),
+               box-shadow var(--dur-fast) var(--ease-standard);
+  }
+  .btn-primary{background:var(--color-navy);color:#fff;box-shadow:var(--shadow-xs);}
+  .btn-primary:hover{background:#0A5689;}
+  .btn-ghost{background:transparent;color:var(--fg-2);border-color:var(--border-default);}
+  .btn-ghost:hover{background:var(--bg-subtle);}
+  .btn-danger{background:var(--color-error);color:#fff;}
+  .btn-danger:hover{background:#b83a26;}
+  .btn i{width:14px;height:14px;}
+
+  /* ── Confirmation dialog (compact) ── */
+  .modal-compact .modal-body{padding:20px 24px;}
+</style>
+</head>
+<body>
+
+  <!-- Confirm dialog -->
+  <div class="demo">
+    <p class="section-label">Confirmation dialog</p>
+    <div class="modal-scene">
+      <div class="modal" style="max-width:420px;">
+        <div class="modal-header">
+          <div class="modal-icon error"><i data-lucide="trash-2"></i></div>
+          <div class="modal-title-group">
+            <p class="modal-title">Delete asset record</p>
+            <p class="modal-subtitle">This will permanently remove HX-4471-A and all linked iBOM data.</p>
+          </div>
+          <button class="modal-close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body modal-compact">
+          <p>This action cannot be undone. Confirm you want to delete the <strong>Impeller, 6-vane stainless</strong> record and its 3 linked assemblies.</p>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger"><i data-lucide="trash-2"></i>Delete record</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form dialog -->
+  <div class="demo">
+    <p class="section-label">Form dialog</p>
+    <div class="modal-scene" style="min-height:460px;">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-icon navy"><i data-lucide="plus-circle"></i></div>
+          <div class="modal-title-group">
+            <p class="modal-title">Add part to catalog</p>
+            <p class="modal-subtitle">New entry will be added to the active iBOM.</p>
+          </div>
+          <button class="modal-close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>Part number</label>
+            <input type="text" placeholder="e.g. HX-4471-A" value="HX-5502-C">
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <input type="text" placeholder="Short part description" value="Shaft coupling, rigid, 316 SS">
+          </div>
+          <div class="field">
+            <label>Category</label>
+            <select><option>Mechanical — Rotating</option><option>Mechanical — Static</option><option>Seals &amp; Gaskets</option></select>
+          </div>
+          <div class="field">
+            <label>Notes <span style="font-weight:400;color:var(--fg-3);">(optional)</span></label>
+            <textarea placeholder="Additional notes, revision notes…"></textarea>
+          </div>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="modal-footer spread">
+          <button class="btn btn-ghost"><i data-lucide="paperclip"></i>Attach file</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-primary"><i data-lucide="check"></i>Add part</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div class="demo">
+    <p class="section-label">Success / confirmation state</p>
+    <div class="modal-scene">
+      <div class="modal" style="max-width:400px;">
+        <div class="modal-body" style="text-align:center;padding:32px 32px 24px;">
+          <div class="modal-icon success" style="margin:0 auto 16px;width:48px;height:48px;border-radius:var(--radius-pill);">
+            <i data-lucide="check-circle" style="width:24px;height:24px;"></i>
+          </div>
+          <p class="modal-title" style="font-size:var(--fs-18);margin-bottom:6px;">iBOM export ready</p>
+          <p style="font-size:var(--fs-13);color:var(--fg-3);margin:0 0 0;">HX-4471-A — Impeller assembly has been packaged. Your download will start automatically.</p>
+        </div>
+        <div class="modal-divider"></div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost">View history</button>
+          <button class="btn btn-primary"><i data-lucide="download"></i>Download now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
