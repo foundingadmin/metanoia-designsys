@@ -306,6 +306,9 @@ body {
 
   /* Section spacing */
   .ds-section { margin-bottom: 48px; }
+
+  /* Changelog: extra breathing room above heading on mobile */
+  #changelog { padding-top: 20px; }
 }
 
 /* ── Very small screens ── */
@@ -371,7 +374,7 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.1.2';
+const VERSION      = '1.1.3';
 const LAST_UPDATED = 'May 6, 2026';
 
 /* ================================================================
@@ -380,6 +383,18 @@ const LAST_UPDATED = 'May 6, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.1.3',
+    date: '2026-05-06',
+    type: 'patch',
+    changes: [
+      'Reduced card-body horizontal padding on mobile — text fills more width, less premature wrapping',
+      'Reduced body padding in components-tabs.html on mobile — prevents tab label truncation',
+      'Reduced modal-scene vertical padding and added horizontal inset on mobile — eliminates heavy navy bleed at top/bottom',
+      'Reduced body padding in components-pagination.html on mobile and increased inter-demo spacing from 32px to 44px',
+      'Added padding-top:20px above changelog section on mobile — more breathing room before the header',
+    ],
+  },
   {
     version: '1.1.2',
     date: '2026-05-06',
