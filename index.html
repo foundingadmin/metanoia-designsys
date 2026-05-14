@@ -37,6 +37,10 @@ body {
   font-size: var(--fs-13); color: rgba(255,255,255,0.55);
   font-weight: var(--fw-medium); white-space: nowrap;
 }
+.ds-header-sub a {
+  color: inherit; text-decoration: none;
+}
+.ds-header-sub a:hover { color: var(--color-aqua); }
 .ds-version-pill {
   margin-left: auto; flex-shrink: 0;
   font-size: 11px; font-weight: var(--fw-semibold);
@@ -321,6 +325,10 @@ body {
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-canvas);
 }
+.ds-footer a {
+  color: inherit; text-decoration: none;
+}
+.ds-footer a:hover { color: var(--color-navy); }
 
 /* ── Changelog desktop top padding ── */
 #changelog { padding-top: 48px; }
@@ -337,7 +345,7 @@ body {
 <header class="ds-header">
   <a class="ds-wordmark" href="https://www.foundingcreative.com" target="_blank" rel="noopener">meta<em>noia</em></a>
   <div class="ds-header-pipe"></div>
-  <span class="ds-header-sub">Brandforge Design System</span>
+  <span class="ds-header-sub"><a href="https://www.foundingcreative.com" target="_blank" rel="noopener">Brandforge</a> Design System</span>
   <a class="ds-version-pill" href="#changelog" id="version-pill">
     <i data-lucide="tag"></i>
     <span id="version-text">v1.1.0</span>
@@ -383,14 +391,14 @@ body {
   </main>
 </div><!-- /.ds-layout -->
 
-<footer class="ds-footer">Brandforge by FoundingCreative</footer>
+<footer class="ds-footer"><a href="https://www.foundingcreative.com" target="_blank" rel="noopener">Brandforge</a> by <a href="https://www.foundingcreative.com" target="_blank" rel="noopener">FoundingCreative</a></footer>
 
 <script>
 /* ================================================================
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.2.0';
+const VERSION      = '1.2.1';
 const LAST_UPDATED = 'May 14, 2026';
 
 /* ================================================================
@@ -399,6 +407,18 @@ const LAST_UPDATED = 'May 14, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.2.1',
+    date: '2026-05-14',
+    type: 'patch',
+    changes: [
+      'Fixed colors-tints.html blank space at bottom — removed fixed grid height, set min-height on swatches instead',
+      'Fixed type-body.html mobile overflow — added width:100% and overflow-wrap:anywhere to .spec in mobile breakpoint',
+      'Fixed hero mobile layout — restructured to mobile-first; single-column is default, 2-col only applies at min-width:600px so copy fills full width on narrow viewports',
+      'Removed modal page-container (navy backdrop) on mobile — plain white background, bare cards only; backdrop preserved at min-width:500px',
+      'Linked "Brandforge" and "FoundingCreative" in header subtitle and footer to foundingcreative.com (new tab)',
+    ],
+  },
   {
     version: '1.2.0',
     date: '2026-05-14',
