@@ -29,6 +29,7 @@ body {
   font-size: var(--fs-18); font-weight: var(--fw-bold);
   color: #fff; letter-spacing: var(--ls-tight); text-transform: lowercase;
   line-height: 1; flex-shrink: 0;
+  text-decoration: none;
 }
 .ds-wordmark em { color: var(--color-aqua); font-style: normal; }
 .ds-header-pipe { width: 1px; height: 20px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
@@ -307,9 +308,22 @@ body {
   /* Section spacing */
   .ds-section { margin-bottom: 48px; }
 
-  /* Changelog: extra breathing room above heading on mobile */
-  #changelog { padding-top: 20px; }
+  /* Changelog: override desktop padding on mobile */
+  #changelog { padding-top: 24px; }
 }
+
+/* ── Footer ── */
+.ds-footer {
+  text-align: center;
+  padding: 24px 28px;
+  font-size: var(--fs-12);
+  color: var(--fg-4);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-canvas);
+}
+
+/* ── Changelog desktop top padding ── */
+#changelog { padding-top: 48px; }
 
 /* ── Very small screens ── */
 @media (max-width: 359px) {
@@ -321,9 +335,9 @@ body {
 
 <!-- ── HEADER ── -->
 <header class="ds-header">
-  <span class="ds-wordmark">meta<em>noia</em></span>
+  <a class="ds-wordmark" href="https://www.foundingcreative.com" target="_blank" rel="noopener">meta<em>noia</em></a>
   <div class="ds-header-pipe"></div>
-  <span class="ds-header-sub">Design System</span>
+  <span class="ds-header-sub">Brandforge Design System</span>
   <a class="ds-version-pill" href="#changelog" id="version-pill">
     <i data-lucide="tag"></i>
     <span id="version-text">v1.1.0</span>
@@ -369,13 +383,15 @@ body {
   </main>
 </div><!-- /.ds-layout -->
 
+<footer class="ds-footer">Brandforge by FoundingCreative</footer>
+
 <script>
 /* ================================================================
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.1.5';
-const LAST_UPDATED = 'May 6, 2026';
+const VERSION      = '1.2.0';
+const LAST_UPDATED = 'May 14, 2026';
 
 /* ================================================================
    CHANGELOG
@@ -383,6 +399,29 @@ const LAST_UPDATED = 'May 6, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.2.0',
+    date: '2026-05-14',
+    type: 'minor',
+    changes: [
+      'Renamed header subtitle to "Brandforge Design System"; wordmark now links to foundingcreative.com',
+      'Added footer with "Brandforge by FoundingCreative" on both desktop and mobile',
+      'Fixed primary palette spacing — added 16px body padding, 12px gap between swatches, rounded swatch corners',
+      'Normalized shadow stack container padding to 32px on all sides; centered shadow row',
+      'Fixed border radii pill orphan — nowrap flex row with reduced box size (52px) and gap (12px), horizontal scroll on overflow',
+      'Increased horizontal logo lockup tile padding (40px 52px) for proper breathing room',
+      'Added visible border to Cancel/ghost button using var(--border-default) token',
+      'Constrained form inputs to max-width 720px on desktop; bumped mobile stacking breakpoint to 600px',
+      'Increased visual separation between Status Pills and Filter Chips groups (margin-top 32px)',
+      'Constrained card grid to max-width 760px; capped card-image max-height to 220px to prevent overflow on desktop',
+      'Increased hero desktop top padding (36px → 72px) for more commanding large-format feel',
+      'Fixed hero mobile text wrap — removed max-width constraint on p and h1 at ≤480px; added mobile top padding',
+      'Made all tab groups interactive — clicking an inactive tab sets it active via JS, applies to all variants',
+      'Hidden modal backdrop overlay on mobile (≤500px) — modal renders as card with shadow only',
+      'Bumped empty-states no-results grid stacking breakpoint to 600px to match mobile viewport',
+      'Added 48px top padding to Changelog section on desktop for generous separation from content above',
+    ],
+  },
   {
     version: '1.1.5',
     date: '2026-05-06',

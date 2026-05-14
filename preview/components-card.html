@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="../colors_and_type.css">
 <style>
   html,body{margin:0;padding:32px 32px 36px;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;max-width:760px;}
   @media(max-width:500px){
     html,body{padding:20px 12px 24px;}
-    .grid{grid-template-columns:1fr;}
+    .grid{grid-template-columns:1fr;max-width:none;}
     .card-body{padding:20px 16px 16px;}
     .card-foot{padding:0 16px 4px;}
     .tag-row{padding:0 16px 14px;}
@@ -39,10 +39,12 @@
   /* Image variant */
   .card-image{
     aspect-ratio:16/9;
+    max-height:220px;
     background:linear-gradient(135deg,#094B77 0%,#1F6EA0 60%,#32CBED 100%);
     display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
   }
-  .card-image img{width:48%;max-width:130px;opacity:0.92;}
+  .card-image img{width:48%;max-width:110px;opacity:0.92;}
 
   .eyebrow{
     font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;

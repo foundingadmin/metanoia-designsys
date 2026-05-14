@@ -7,7 +7,11 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
   html,body{margin:0;padding:24px 28px;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
-  @media(max-width:500px){html,body{padding:16px 12px;}.modal-scene{padding:20px 12px;}}
+  @media(max-width:500px){
+    html,body{padding:16px 12px;}
+    .modal-scene{padding:20px 12px;background:transparent;}
+    .modal{box-shadow:var(--shadow-xl);}
+  }
   .section-label{font-size:11px;font-weight:600;letter-spacing:0.10em;text-transform:uppercase;color:var(--fg-3);margin:0 0 14px;}
   .demo{margin-bottom:32px;}
 
@@ -99,7 +103,7 @@
   }
   .btn-primary{background:var(--color-navy);color:#fff;box-shadow:var(--shadow-xs);}
   .btn-primary:hover{background:#0A5689;}
-  .btn-ghost{background:transparent;color:var(--fg-2);border-color:var(--border-default);}
+  .btn-ghost{background:transparent;color:var(--fg-2);border-color:var(--border-default);border-width:1px;}
   .btn-ghost:hover{background:var(--bg-subtle);}
   .btn-danger{background:var(--color-error);color:#fff;}
   .btn-danger:hover{background:#b83a26;}

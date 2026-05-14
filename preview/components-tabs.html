@@ -141,6 +141,34 @@
     </div>
   </div>
 
-<script>lucide.createIcons();</script>
+<script>
+lucide.createIcons();
+
+/* Make underline tab groups interactive */
+document.querySelectorAll('.tabs').forEach(group => {
+  group.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      group.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+        const count = t.querySelector('.tab-count');
+        if (count) count.classList.remove('active');
+      });
+      tab.classList.add('active');
+      const count = tab.querySelector('.tab-count');
+      if (count) count.classList.add('active');
+    });
+  });
+});
+
+/* Make pill tab groups interactive */
+document.querySelectorAll('.tabs-pill').forEach(group => {
+  group.querySelectorAll('.tab-pill').forEach(tab => {
+    tab.addEventListener('click', () => {
+      group.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+});
+</script>
 </body>
 </html>
