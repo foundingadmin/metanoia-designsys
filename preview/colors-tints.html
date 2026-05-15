@@ -7,23 +7,50 @@
 <style>
   html,body{margin:0;padding:0;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
   .grid{display:grid;grid-template-columns:repeat(4,1fr);}
-  .sw{padding:14px 16px;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;font-size:11px;}
+  .sw{padding:14px 16px;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;font-size:11px;cursor:pointer;position:relative;overflow:hidden;transition:filter 120ms;}
+  .sw:hover{filter:brightness(0.95);}
   .name{font-weight:600;}
   .hex{font-family:var(--font-mono);opacity:0.7;margin-top:2px;}
   .dark{color:#fff;}
   .row-label{grid-column:1/-1;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--fg-3);padding:8px 16px 4px;background:#fff;}
+
+  .copy-hint{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    background:rgba(0,0,0,0.12);color:#131A21;opacity:0;transition:opacity 140ms;
+    text-align:center;
+  }
+  .dark .copy-hint{background:rgba(0,0,0,0.22);color:#fff;}
+  .sw:hover .copy-hint{opacity:1;}
+  .copy-hint.copied{opacity:1;background:rgba(0,0,0,0.22);}
 </style>
 </head>
 <body>
   <div class="grid">
-    <div class="sw dark" style="background:#062F4A"><div class="name">Navy 900</div><div class="hex">#062F4A</div></div>
-    <div class="sw dark" style="background:#094B77"><div class="name">Navy 700</div><div class="hex">#094B77</div></div>
-    <div class="sw dark" style="background:#1F6EA0"><div class="name">Navy 500</div><div class="hex">#1F6EA0</div></div>
-    <div class="sw" style="background:#DCEAF3"><div class="name">Navy 100</div><div class="hex">#DCEAF3</div></div>
-    <div class="sw dark" style="background:#1FA8C9"><div class="name">Aqua 700</div><div class="hex">#1FA8C9</div></div>
-    <div class="sw" style="background:#32CBED;color:#062F4A"><div class="name">Aqua 500</div><div class="hex" style="opacity:.65">#32CBED</div></div>
-    <div class="sw" style="background:#BFF1FB"><div class="name">Aqua 200</div><div class="hex">#BFF1FB</div></div>
-    <div class="sw" style="background:#ECFAFD"><div class="name">Aqua 50</div><div class="hex">#ECFAFD</div></div>
+    <div class="sw dark" style="background:#062F4A" data-hex="#062F4A"><div class="copy-hint">Click to copy</div><div class="name">Navy 900</div><div class="hex">#062F4A</div></div>
+    <div class="sw dark" style="background:#094B77" data-hex="#094B77"><div class="copy-hint">Click to copy</div><div class="name">Navy 700</div><div class="hex">#094B77</div></div>
+    <div class="sw dark" style="background:#1F6EA0" data-hex="#1F6EA0"><div class="copy-hint">Click to copy</div><div class="name">Navy 500</div><div class="hex">#1F6EA0</div></div>
+    <div class="sw" style="background:#DCEAF3" data-hex="#DCEAF3"><div class="copy-hint">Click to copy</div><div class="name">Navy 100</div><div class="hex">#DCEAF3</div></div>
+    <div class="sw dark" style="background:#1FA8C9" data-hex="#1FA8C9"><div class="copy-hint">Click to copy</div><div class="name">Aqua 700</div><div class="hex">#1FA8C9</div></div>
+    <div class="sw" style="background:#32CBED;color:#062F4A" data-hex="#32CBED"><div class="copy-hint">Click to copy</div><div class="name">Aqua 500</div><div class="hex" style="opacity:.65">#32CBED</div></div>
+    <div class="sw" style="background:#BFF1FB" data-hex="#BFF1FB"><div class="copy-hint">Click to copy</div><div class="name">Aqua 200</div><div class="hex">#BFF1FB</div></div>
+    <div class="sw" style="background:#ECFAFD" data-hex="#ECFAFD"><div class="copy-hint">Click to copy</div><div class="name">Aqua 50</div><div class="hex">#ECFAFD</div></div>
   </div>
+<script>
+  document.querySelectorAll('.sw[data-hex]').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      navigator.clipboard.writeText(hex).then(() => {
+        const hint = sw.querySelector('.copy-hint');
+        hint.textContent = 'Copied';
+        hint.classList.add('copied');
+        setTimeout(() => {
+          hint.textContent = 'Click to copy';
+          hint.classList.remove('copied');
+        }, 1400);
+      });
+    });
+  });
+</script>
 </body>
 </html>

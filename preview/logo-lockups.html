@@ -7,15 +7,45 @@
 <style>
   html,body{margin:0;padding:0;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
   .card{display:grid;grid-template-columns:1.6fr 1fr;gap:1px;background:var(--border-subtle);height:240px;}
-  .tile{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px 52px;position:relative;}
+  .tile{background:#fff;display:flex;align-items:center;justify-content:center;padding:40px 52px;position:relative;overflow:hidden;}
   .tile img{max-width:100%;max-height:120px;}
   .label{position:absolute;left:12px;bottom:10px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);font-weight:600;}
+
+  .dl-btn{
+    position:absolute;top:10px;right:10px;
+    display:flex;align-items:center;gap:5px;
+    padding:5px 10px;border-radius:6px;
+    font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+    text-decoration:none;
+    background:rgba(255,255,255,0.85);color:#094B77;
+    border:1px solid rgba(9,75,119,0.18);
+    opacity:0;transform:translateY(-4px);
+    transition:opacity 140ms,transform 140ms;
+    backdrop-filter:blur(4px);
+  }
+  .tile:hover .dl-btn{opacity:1;transform:translateY(0);}
+  .dl-btn:active{opacity:0.8;}
+  .dl-btn svg{flex-shrink:0;}
 </style>
 </head>
 <body>
   <div class="card">
-    <div class="tile"><img src="../assets/logo-lockup-horiz.svg" alt=""><span class="label">Horizontal</span></div>
-    <div class="tile"><img src="../assets/logo-lockup-vert.svg" alt=""><span class="label">Vertical</span></div>
+    <div class="tile">
+      <img src="../assets/logo-lockup-horiz.svg" alt="">
+      <span class="label">Horizontal</span>
+      <a class="dl-btn" href="../assets/logo-lockup-horiz.svg" download="metanoia-lockup-horizontal.svg">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SVG
+      </a>
+    </div>
+    <div class="tile">
+      <img src="../assets/logo-lockup-vert.svg" alt="">
+      <span class="label">Vertical</span>
+      <a class="dl-btn" href="../assets/logo-lockup-vert.svg" download="metanoia-lockup-vertical.svg">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SVG
+      </a>
+    </div>
   </div>
 </body>
 </html>

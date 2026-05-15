@@ -7,19 +7,56 @@
 <style>
   html,body{margin:0;padding:0;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
   .row{display:grid;grid-template-columns:repeat(4,1fr);height:160px;}
-  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px;color:#fff;position:relative;}
+  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px;color:#fff;position:relative;cursor:pointer;overflow:hidden;transition:filter 120ms;}
+  .sw:hover{filter:brightness(0.95);}
   .name{font-weight:600;font-size:14px;}
   .hex{font-family:var(--font-mono);font-size:11px;opacity:0.82;margin-top:2px;}
   .role{position:absolute;top:12px;left:16px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;opacity:0.9;}
   .note{position:absolute;top:12px;right:16px;font-size:10px;opacity:0.75;}
+
+  .copy-hint{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    background:rgba(0,0,0,0.18);color:#fff;opacity:0;transition:opacity 140ms;
+  }
+  .sw:hover .copy-hint{opacity:1;}
+  .copy-hint.copied{opacity:1;background:rgba(0,0,0,0.30);}
 </style>
 </head>
 <body>
   <div class="row">
-    <div class="sw" style="background:#2E9E6E"><span class="role">Success</span><div class="name">Success</div><div class="hex">#2E9E6E</div></div>
-    <div class="sw" style="background:#E9A23B"><span class="role">Warning</span><div class="name">Warning</div><div class="hex">#E9A23B</div></div>
-    <div class="sw" style="background:#D6492F"><span class="role">Error</span><div class="name">Error</div><div class="hex">#D6492F</div></div>
-    <div class="sw" style="background:#7C5BD9"><span class="role">Info</span><div class="name">Info</div><div class="hex">#7C5BD9</div><span class="note" style="opacity:.7">distinct from brand</span></div>
+    <div class="sw" style="background:#2E9E6E" data-hex="#2E9E6E">
+      <div class="copy-hint">Click to copy</div>
+      <span class="role">Success</span><div class="name">Success</div><div class="hex">#2E9E6E</div>
+    </div>
+    <div class="sw" style="background:#E9A23B" data-hex="#E9A23B">
+      <div class="copy-hint">Click to copy</div>
+      <span class="role">Warning</span><div class="name">Warning</div><div class="hex">#E9A23B</div>
+    </div>
+    <div class="sw" style="background:#D6492F" data-hex="#D6492F">
+      <div class="copy-hint">Click to copy</div>
+      <span class="role">Error</span><div class="name">Error</div><div class="hex">#D6492F</div>
+    </div>
+    <div class="sw" style="background:#7C5BD9" data-hex="#7C5BD9">
+      <div class="copy-hint">Click to copy</div>
+      <span class="role">Info</span><div class="name">Info</div><div class="hex">#7C5BD9</div><span class="note" style="opacity:.7">distinct from brand</span>
+    </div>
   </div>
+<script>
+  document.querySelectorAll('.sw[data-hex]').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      navigator.clipboard.writeText(hex).then(() => {
+        const hint = sw.querySelector('.copy-hint');
+        hint.textContent = 'Copied';
+        hint.classList.add('copied');
+        setTimeout(() => {
+          hint.textContent = 'Click to copy';
+          hint.classList.remove('copied');
+        }, 1400);
+      });
+    });
+  });
+</script>
 </body>
 </html>

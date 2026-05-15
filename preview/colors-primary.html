@@ -7,7 +7,8 @@
 <style>
   html,body{margin:0;padding:16px;background:var(--bg-subtle);font-family:var(--font-sans);color:var(--fg-2);}
   .row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px;color:#fff;position:relative;border-radius:10px;min-height:200px;}
+  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px;color:#fff;position:relative;border-radius:10px;min-height:200px;cursor:pointer;overflow:hidden;transition:filter 120ms;}
+  .sw:hover{filter:brightness(0.95);}
   .name{font-size:14px;font-weight:600;letter-spacing:0;}
   .hex{font-family:var(--font-mono);font-size:12px;opacity:0.85;margin-top:2px;}
   .role{position:absolute;top:14px;left:18px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;opacity:0.85;}
@@ -16,13 +17,47 @@
   .aqua .hex{opacity:0.7;}
   .laqua{background:#9BEBF9;color:#062F4A;}
   .laqua .hex{opacity:0.7;}
+
+  .copy-hint{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    background:rgba(0,0,0,0.18);opacity:0;transition:opacity 140ms;
+    border-radius:10px;
+  }
+  .sw:hover .copy-hint{opacity:1;}
+  .copy-hint.copied{opacity:1;background:rgba(0,0,0,0.32);}
 </style>
 </head>
 <body>
   <div class="row">
-    <div class="sw navy"><div class="role">Primary</div><div class="name">Navy</div><div class="hex">#094B77</div></div>
-    <div class="sw aqua"><div class="role">Primary accent</div><div class="name">Aqua</div><div class="hex">#32CBED</div></div>
-    <div class="sw laqua"><div class="role">Secondary</div><div class="name">Light Aqua</div><div class="hex">#9BEBF9</div></div>
+    <div class="sw navy" data-hex="#094B77">
+      <div class="copy-hint">Click to copy</div>
+      <div class="role">Primary</div><div class="name">Navy</div><div class="hex">#094B77</div>
+    </div>
+    <div class="sw aqua" data-hex="#32CBED">
+      <div class="copy-hint">Click to copy</div>
+      <div class="role">Primary accent</div><div class="name">Aqua</div><div class="hex">#32CBED</div>
+    </div>
+    <div class="sw laqua" data-hex="#9BEBF9">
+      <div class="copy-hint">Click to copy</div>
+      <div class="role">Secondary</div><div class="name">Light Aqua</div><div class="hex">#9BEBF9</div>
+    </div>
   </div>
+<script>
+  document.querySelectorAll('.sw[data-hex]').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      navigator.clipboard.writeText(hex).then(() => {
+        const hint = sw.querySelector('.copy-hint');
+        hint.textContent = 'Copied';
+        hint.classList.add('copied');
+        setTimeout(() => {
+          hint.textContent = 'Click to copy';
+          hint.classList.remove('copied');
+        }, 1400);
+      });
+    });
+  });
+</script>
 </body>
 </html>

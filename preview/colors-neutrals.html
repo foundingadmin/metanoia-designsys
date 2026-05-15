@@ -7,24 +7,51 @@
 <style>
   html,body{margin:0;padding:0;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
   .row{display:grid;grid-template-columns:repeat(7,1fr);height:160px;}
-  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;font-size:11px;}
+  .sw{display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;font-size:11px;cursor:pointer;position:relative;overflow:hidden;transition:filter 120ms;}
+  .sw:hover{filter:brightness(0.95);}
   .name{font-weight:600;letter-spacing:0;}
   .hex{font-family:var(--font-mono);font-size:10px;opacity:0.7;margin-top:2px;}
   .dark{color:#fff;}
   .dark .hex{opacity:0.8;}
   .b{border:1px solid var(--border-subtle);border-right:none;}
   .b:last-child{border-right:1px solid var(--border-subtle);}
+
+  .copy-hint{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    background:rgba(0,0,0,0.12);color:#131A21;opacity:0;transition:opacity 140ms;
+    padding:4px;text-align:center;
+  }
+  .dark .copy-hint{background:rgba(0,0,0,0.25);color:#fff;}
+  .sw:hover .copy-hint{opacity:1;}
+  .copy-hint.copied{opacity:1;background:rgba(0,0,0,0.22);}
 </style>
 </head>
 <body>
   <div class="row">
-    <div class="sw b" style="background:#FFFFFF"><div class="name">White</div><div class="hex">#FFFFFF</div></div>
-    <div class="sw b" style="background:#F4F6F8"><div class="name">Grey-50</div><div class="hex">#F4F6F8</div></div>
-    <div class="sw b" style="background:#ECEFF2"><div class="name">Grey-100</div><div class="hex">#ECEFF2</div></div>
-    <div class="sw b" style="background:#D8DEE3"><div class="name">Grey-200</div><div class="hex">#D8DEE3</div></div>
-    <div class="sw b dark" style="background:#8C97A1"><div class="name">Grey</div><div class="hex">#8C97A1</div></div>
-    <div class="sw b dark" style="background:#56636F"><div class="name">Dark Grey</div><div class="hex">#56636F</div></div>
-    <div class="sw b dark" style="background:#131A21"><div class="name">Black</div><div class="hex">#131A21</div></div>
+    <div class="sw b" style="background:#FFFFFF" data-hex="#FFFFFF"><div class="copy-hint">Click to copy</div><div class="name">White</div><div class="hex">#FFFFFF</div></div>
+    <div class="sw b" style="background:#F4F6F8" data-hex="#F4F6F8"><div class="copy-hint">Click to copy</div><div class="name">Grey-50</div><div class="hex">#F4F6F8</div></div>
+    <div class="sw b" style="background:#ECEFF2" data-hex="#ECEFF2"><div class="copy-hint">Click to copy</div><div class="name">Grey-100</div><div class="hex">#ECEFF2</div></div>
+    <div class="sw b" style="background:#D8DEE3" data-hex="#D8DEE3"><div class="copy-hint">Click to copy</div><div class="name">Grey-200</div><div class="hex">#D8DEE3</div></div>
+    <div class="sw b dark" style="background:#8C97A1" data-hex="#8C97A1"><div class="copy-hint">Click to copy</div><div class="name">Grey</div><div class="hex">#8C97A1</div></div>
+    <div class="sw b dark" style="background:#56636F" data-hex="#56636F"><div class="copy-hint">Click to copy</div><div class="name">Dark Grey</div><div class="hex">#56636F</div></div>
+    <div class="sw b dark" style="background:#131A21" data-hex="#131A21"><div class="copy-hint">Click to copy</div><div class="name">Black</div><div class="hex">#131A21</div></div>
   </div>
+<script>
+  document.querySelectorAll('.sw[data-hex]').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      navigator.clipboard.writeText(hex).then(() => {
+        const hint = sw.querySelector('.copy-hint');
+        hint.textContent = 'Copied';
+        hint.classList.add('copied');
+        setTimeout(() => {
+          hint.textContent = 'Click to copy';
+          hint.classList.remove('copied');
+        }, 1400);
+      });
+    });
+  });
+</script>
 </body>
 </html>

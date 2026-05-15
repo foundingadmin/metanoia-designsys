@@ -7,19 +7,58 @@
 <style>
   html,body{margin:0;padding:0;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-2);}
   .card{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border-subtle);height:240px;}
-  .tile{background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;}
+  .tile{background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden;}
   .tile.dark{background:var(--color-navy);}
   .tile.aqua{background:var(--color-light-aqua);}
   .tile img{max-width:100%;max-height:120px;}
   .label{position:absolute;left:12px;bottom:10px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);font-weight:600;}
   .tile.dark .label{color:rgba(255,255,255,0.65);}
+
+  .dl-btn{
+    position:absolute;top:10px;right:10px;
+    display:flex;align-items:center;gap:5px;
+    padding:5px 10px;border-radius:6px;
+    font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+    text-decoration:none;
+    background:rgba(255,255,255,0.85);color:#094B77;
+    border:1px solid rgba(9,75,119,0.18);
+    opacity:0;transform:translateY(-4px);
+    transition:opacity 140ms,transform 140ms;
+    backdrop-filter:blur(4px);
+  }
+  .tile.dark .dl-btn{background:rgba(0,0,0,0.35);color:#fff;border-color:rgba(255,255,255,0.2);}
+  .tile.aqua .dl-btn{background:rgba(255,255,255,0.75);color:#094B77;border-color:rgba(9,75,119,0.18);}
+  .tile:hover .dl-btn{opacity:1;transform:translateY(0);}
+  .dl-btn:active{opacity:0.8;}
+  .dl-btn svg{flex-shrink:0;}
 </style>
 </head>
 <body>
   <div class="card">
-    <div class="tile"><img src="../assets/logo-brandmark.svg" alt=""><span class="label">Color · Light</span></div>
-    <div class="tile dark"><img src="../assets/logo-brandmark-white.svg" alt=""><span class="label">White · Dark</span></div>
-    <div class="tile aqua"><img src="../assets/logo-brandmark-navy.svg" alt=""><span class="label">Navy · Aqua wash</span></div>
+    <div class="tile">
+      <img src="../assets/logo-brandmark.svg" alt="">
+      <span class="label">Color · Light</span>
+      <a class="dl-btn" href="../assets/logo-brandmark.svg" download="metanoia-brandmark-color.svg">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SVG
+      </a>
+    </div>
+    <div class="tile dark">
+      <img src="../assets/logo-brandmark-white.svg" alt="">
+      <span class="label">White · Dark</span>
+      <a class="dl-btn" href="../assets/logo-brandmark-white.svg" download="metanoia-brandmark-white.svg">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SVG
+      </a>
+    </div>
+    <div class="tile aqua">
+      <img src="../assets/logo-brandmark-navy.svg" alt="">
+      <span class="label">Navy · Aqua wash</span>
+      <a class="dl-btn" href="../assets/logo-brandmark-navy.svg" download="metanoia-brandmark-navy.svg">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SVG
+      </a>
+    </div>
   </div>
 </body>
 </html>
