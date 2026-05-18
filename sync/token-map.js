@@ -98,6 +98,7 @@ const TOKEN_MAP = [
   { css: '--fs-56',  figma: 'Font Size/56 H1',       type: 'FLOAT', transform: remToPx },
   { css: '--fs-72',  figma: 'Font Size/72 Display',  type: 'FLOAT', transform: remToPx },
   { css: '--fs-96',  figma: 'Font Size/96 Hero',     type: 'FLOAT', transform: remToPx },
+  { css: '--fs-120', figma: 'Font Size/120 Display XL', type: 'FLOAT', transform: remToPx },
 
   // ── Typography — Font Weight ──────────────────────────────────────────────
   { css: '--fw-light',    figma: 'Font Weight/300 Light',    type: 'FLOAT' },
@@ -105,6 +106,20 @@ const TOKEN_MAP = [
   { css: '--fw-medium',   figma: 'Font Weight/500 Medium',   type: 'FLOAT' },
   { css: '--fw-semibold', figma: 'Font Weight/600 Semibold', type: 'FLOAT' },
   { css: '--fw-bold',     figma: 'Font Weight/700 Bold',     type: 'FLOAT' },
+
+  // ── Typography — Line Height ──────────────────────────────────────────────
+  { css: '--lh-tight',   figma: 'Line Height/Tight',   type: 'FLOAT', transform: parseFloat },
+  { css: '--lh-snug',    figma: 'Line Height/Snug',    type: 'FLOAT', transform: parseFloat },
+  { css: '--lh-normal',  figma: 'Line Height/Normal',  type: 'FLOAT', transform: parseFloat },
+  { css: '--lh-relaxed', figma: 'Line Height/Relaxed', type: 'FLOAT', transform: parseFloat },
+
+  // ── Typography — Letter Spacing ───────────────────────────────────────────
+  // CSS stores these as em (e.g. -0.02em); Figma stores the bare multiplier (-0.02).
+  { css: '--ls-tight',   figma: 'Letter Spacing/Tight',   type: 'FLOAT', transform: emToNum },
+  { css: '--ls-snug',    figma: 'Letter Spacing/Snug',    type: 'FLOAT', transform: emToNum },
+  { css: '--ls-normal',  figma: 'Letter Spacing/Normal',  type: 'FLOAT', transform: emToNum },
+  { css: '--ls-wide',    figma: 'Letter Spacing/Wide',    type: 'FLOAT', transform: emToNum },
+  { css: '--ls-eyebrow', figma: 'Letter Spacing/Eyebrow', type: 'FLOAT', transform: emToNum },
 
   // ── Spacing ───────────────────────────────────────────────────────────────
   { css: '--space-0',  figma: 'Spacing/0',  type: 'FLOAT', transform: pxToNum },
@@ -141,5 +156,9 @@ function pxToNum(val) {
   // '8px' → 8
   return parseFloat(val);
 }
+function emToNum(val) {
+  // '-0.02em' → -0.02  (strips the 'em' unit; Figma stores bare multiplier)
+  return parseFloat(val);
+}
 
-module.exports = { TOKEN_MAP, remToPx, pxToNum };
+module.exports = { TOKEN_MAP, remToPx, pxToNum, emToNum };

@@ -410,8 +410,8 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.3.0';
-const LAST_UPDATED = 'May 15, 2026';
+const VERSION      = '1.3.1';
+const LAST_UPDATED = 'May 18, 2026';
 
 /* ================================================================
    CHANGELOG
@@ -419,6 +419,16 @@ const LAST_UPDATED = 'May 15, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.3.1',
+    date: '2026-05-18',
+    type: 'patch',
+    changes: [
+      'Add --fs-120 token (7.5rem) to CSS; wire .t-display to use it instead of hardcoded value',
+      'Add Line Height and Letter Spacing tokens to sync/token-map.js (9 entries previously unmapped)',
+      'Add emToNum transform helper to token-map.js for em-unit letter-spacing values',
+    ],
+  },
   {
     version: '1.3.0',
     date: '2026-05-15',
