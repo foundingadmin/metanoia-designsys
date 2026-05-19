@@ -105,22 +105,17 @@ const TOKEN_MAP = [
   // ════════════════════════════════════════════════════════════════
 
   // ── Backgrounds ──────────────────────────────────────────────────
-  { css: '--bg-canvas',        figma: 'Background/Canvas' },
-  { css: '--bg-subtle',        figma: 'Background/Subtle' },
-  { css: '--bg-muted',         figma: 'Background/Muted' },
-  { css: '--bg-inverse',       figma: 'Background/Inverse' },
-  { css: '--bg-inverse-deep',  figma: 'Background/Inverse Deep' },
-  { css: '--bg-accent-soft',   figma: 'Background/Accent Soft' },
-  { css: '--bg-accent',        figma: 'Background/Accent' },
+  { css: '--bg-canvas',       figma: 'Background/Canvas' },
+  { css: '--bg-subtle',       figma: 'Background/Subtle' },
+  { css: '--bg-muted',        figma: 'Background/Muted' },
+  { css: '--bg-accent-soft',  figma: 'Background/Accent Soft' },
+  { css: '--bg-accent',       figma: 'Background/Accent' },
 
   // ── Foreground / text ────────────────────────────────────────────
   { css: '--fg-1',             figma: 'Foreground/Primary' },
   { css: '--fg-2',             figma: 'Foreground/Body' },
   { css: '--fg-3',             figma: 'Foreground/Secondary' },
   { css: '--fg-4',             figma: 'Foreground/Tertiary' },
-  { css: '--fg-on-dark',       figma: 'Foreground/On Dark' },
-  { css: '--fg-on-dark-2',     figma: 'Foreground/On Dark 2' },
-  { css: '--fg-on-dark-3',     figma: 'Foreground/On Dark 3' },
   { css: '--fg-link',          figma: 'Foreground/Link' },
   { css: '--fg-link-hover',    figma: 'Foreground/Link Hover' },
   { css: '--fg-accent',        figma: 'Foreground/Accent' },
@@ -130,7 +125,6 @@ const TOKEN_MAP = [
   { css: '--border-default',   figma: 'Border/Default' },
   { css: '--border-strong',    figma: 'Border/Strong' },
   { css: '--border-accent',    figma: 'Border/Accent' },
-  { css: '--border-on-dark',   figma: 'Border/On Dark' },
 
   // ════════════════════════════════════════════════════════════════
   // TYPOGRAPHY — tokens/typography.css
@@ -163,6 +157,7 @@ const TOKEN_MAP = [
   { css: '--fw-bold',     figma: 'Font Weight/700 Bold',     type: 'FLOAT' },
 
   // ── Line height ──────────────────────────────────────────────────
+  { css: '--lh-display', figma: 'Line Height/Display', type: 'FLOAT', transform: parseFloat },
   { css: '--lh-tight',   figma: 'Line Height/Tight',   type: 'FLOAT', transform: parseFloat },
   { css: '--lh-snug',    figma: 'Line Height/Snug',    type: 'FLOAT', transform: parseFloat },
   { css: '--lh-normal',  figma: 'Line Height/Normal',  type: 'FLOAT', transform: parseFloat },
@@ -170,11 +165,12 @@ const TOKEN_MAP = [
 
   // ── Letter spacing ───────────────────────────────────────────────
   // CSS: em (e.g. -0.02em); Figma: bare multiplier (-0.02)
+  { css: '--ls-display', figma: 'Letter Spacing/Display', type: 'FLOAT', transform: emToNum },
   { css: '--ls-tight',   figma: 'Letter Spacing/Tight',   type: 'FLOAT', transform: emToNum },
   { css: '--ls-snug',    figma: 'Letter Spacing/Snug',    type: 'FLOAT', transform: emToNum },
   { css: '--ls-normal',  figma: 'Letter Spacing/Normal',  type: 'FLOAT', transform: emToNum },
+  { css: '--ls-loose',   figma: 'Letter Spacing/Loose',   type: 'FLOAT', transform: emToNum },
   { css: '--ls-wide',    figma: 'Letter Spacing/Wide',    type: 'FLOAT', transform: emToNum },
-  { css: '--ls-eyebrow', figma: 'Letter Spacing/Eyebrow', type: 'FLOAT', transform: emToNum },
 
   // ════════════════════════════════════════════════════════════════
   // SPACING — tokens/spacing.css

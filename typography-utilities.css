@@ -40,7 +40,7 @@
   color: var(--fg-1);
 }
 
-.t-display  { font-size: var(--fs-120); font-weight: var(--fw-semibold); line-height: 0.95; letter-spacing: -0.035em; text-wrap: balance; }
+.t-display  { font-size: var(--fs-120); font-weight: var(--fw-semibold); line-height: var(--lh-display); letter-spacing: var(--ls-display); text-wrap: balance; }
 .t-h1       { font-size: var(--fs-56);  font-weight: var(--fw-bold);     line-height: var(--lh-tight);   letter-spacing: var(--ls-tight); text-wrap: balance; }
 .t-h2       { font-size: var(--fs-36);  font-weight: var(--fw-bold);     line-height: var(--lh-snug);    letter-spacing: var(--ls-snug);  text-wrap: balance; }
 .t-h3       { font-size: var(--fs-28);  font-weight: var(--fw-semibold); line-height: var(--lh-snug);    letter-spacing: var(--ls-snug);  text-wrap: balance; }
@@ -53,7 +53,7 @@
   font-size: var(--fs-13);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
-  letter-spacing: var(--ls-eyebrow);
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--fg-3);
 }

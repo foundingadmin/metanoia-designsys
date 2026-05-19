@@ -37,15 +37,17 @@
   --fs-120: 7.5rem;      /* 120 — display XL */
 
   /* ── Line heights ────────────────────────────────────────── */
+  --lh-display: 0.95;
   --lh-tight:   1.05;
   --lh-snug:    1.2;
   --lh-normal:  1.45;
   --lh-relaxed: 1.6;
 
   /* ── Letter spacing ──────────────────────────────────────── */
+  --ls-display: -0.035em;
   --ls-tight:   -0.02em;
   --ls-snug:    -0.01em;
   --ls-normal:  0;
-  --ls-wide:    0.04em;
-  --ls-eyebrow: 0.12em;
+  --ls-loose:   0.04em;
+  --ls-wide:    0.12em;
 }
