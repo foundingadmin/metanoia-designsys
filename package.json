@@ -1,0 +1,14 @@
+{
+  "name": "metanoia-designsys",
+  "version": "1.5.1",
+  "description": "Metanoia design system — tokens, components, and Figma Code Connect",
+  "private": true,
+  "scripts": {
+    "figma:publish": "figma connect publish",
+    "figma:unpublish": "figma connect unpublish",
+    "figma:parse": "figma connect parse"
+  },
+  "devDependencies": {
+    "@figma/code-connect": "^1"
+  }
+}
