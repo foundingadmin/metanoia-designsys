@@ -90,6 +90,7 @@ const TOKEN_MAP = [
   { css: '--color-error-200',  figma: 'Status/Error/200' },
   { css: '--color-error-400',  figma: 'Status/Error/400' },
   { css: '--color-error-600',  figma: 'Status/Error/600' },
+  { css: '--color-error-700',  figma: 'Status/Error/700' },
   { css: '--color-error-800',  figma: 'Status/Error/800' },
   { css: '--color-error-1000', figma: 'Status/Error/1000' },
 
@@ -157,6 +158,9 @@ const TOKEN_MAP = [
   { css: '--fw-bold',     figma: 'Font Weight/700 Bold',     type: 'FLOAT' },
 
   // ── Line height ──────────────────────────────────────────────────
+  // CSS and Figma variables both store the unitless multiplier (e.g. 1.45).
+  // Text styles set lineHeight as { unit: 'PERCENT', value: 145 } explicitly
+  // (not variable-bound) because Figma bound variables are treated as pixels.
   { css: '--lh-display', figma: 'Line Height/Display', type: 'FLOAT', transform: parseFloat },
   { css: '--lh-tight',   figma: 'Line Height/Tight',   type: 'FLOAT', transform: parseFloat },
   { css: '--lh-snug',    figma: 'Line Height/Snug',    type: 'FLOAT', transform: parseFloat },

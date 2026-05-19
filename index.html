@@ -456,7 +456,7 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '2.0.0';
+const VERSION      = '2.1.0';
 const LAST_UPDATED = 'May 19, 2026';
 
 /* ================================================================
@@ -465,6 +465,18 @@ const LAST_UPDATED = 'May 19, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '2.1.0',
+    date: '2026-05-19',
+    type: 'minor',
+    changes: [
+      'Add --color-error-700: #B83C24 to error scale — fills the hover-state gap between Error/600 and Error/800',
+      'Update sync/token-map.js: add Status/Error/700 entry; clarify line height transform note (LH vars store multiplier, not %)',
+      'Figma: create Icon/Placeholder component set (Size=16/20/24) — proper swappable atom for icon slots in button and other components',
+      'Figma: repair Button component set — cornerRadius bound to Radius/MD, padding bound to Spacing variables, textAutoResize fixed, icon slots replaced with Icon/Placeholder instances, Destructive hover/active wired to Error/700/800 variables',
+      'Figma: fix all text style line heights — set as explicit PERCENT values (previously broken due to variable unit mismatch)',
+    ],
+  },
   {
     version: '2.0.0',
     date: '2026-05-19',
