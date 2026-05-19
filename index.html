@@ -75,7 +75,7 @@ body {
 .sidebar-group { margin-bottom: 2px; }
 .sidebar-group-label {
   display: block; font-size: 10px; font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+  letter-spacing: var(--ls-wide); text-transform: uppercase;
   color: var(--fg-4); padding: 10px 10px 4px;
 }
 .sidebar-group-label:first-child { padding-top: 2px; }
@@ -104,7 +104,7 @@ body {
 .ds-section:last-child { margin-bottom: 0; }
 .section-eyebrow {
   font-size: 11px; font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+  letter-spacing: var(--ls-wide); text-transform: uppercase;
   color: var(--color-aqua-700); margin-bottom: 5px;
 }
 .section-heading {
@@ -419,7 +419,7 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.5.1';
+const VERSION      = '2.0.0';
 const LAST_UPDATED = 'May 19, 2026';
 
 /* ================================================================
@@ -428,6 +428,19 @@ const LAST_UPDATED = 'May 19, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '2.0.0',
+    date: '2026-05-19',
+    type: 'major',
+    changes: [
+      'Add Light/Dark variable modes to color-semantic.css — [data-theme="dark"] on <html> flips all semantic tokens; prefers-color-scheme respected as default',
+      'Remove --bg-inverse, --bg-inverse-deep, --fg-on-dark, --fg-on-dark-2, --fg-on-dark-3, --border-on-dark — these are now Dark mode values of the standard semantic tokens (breaking: update any direct usage)',
+      'Add --lh-display (0.95) and --ls-display (-0.035em) typography tokens — Display style now fully token-driven',
+      'Rename --ls-wide (0.04em) → --ls-loose and --ls-eyebrow (0.12em) → --ls-wide (breaking: update any direct usage)',
+      'Update token-map.js: add Display tokens, rename letter-spacing entries, remove inverse/on-dark entries',
+      'Update all preview files and index.html to use renamed/removed token references',
+    ],
+  },
   {
     version: '1.5.1',
     date: '2026-05-19',

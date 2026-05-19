@@ -236,4 +236,4 @@ function run(figmaVars, tokenMap) {
   return { updates, script, warnings };
 }
 
-module.exports = { run, diffAndBuildUpdates, buildFigmaScript, cssColorToFigma, readAllTokenCss };
+module.exports = { run, diffAndBuildUpdates, buildFigmaScript, cssColorToFigma, readAllTokenCss, parseCssVars, resolveAll };

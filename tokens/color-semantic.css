@@ -2,26 +2,22 @@
    Metanoia — Color Semantic Aliases
    Role-based tokens that reference color-primitives.css.
    Always use these in components — never primitives directly.
+   Dark mode: apply [data-theme="dark"] to <html>.
    ============================================================ */
 
 :root {
   /* ── Surfaces ───────────────────────────────────────────── */
-  --bg-canvas:       var(--color-white);
-  --bg-subtle:       var(--color-grey-50);
-  --bg-muted:        var(--color-grey-100);
-  --bg-inverse:      var(--color-navy);
-  --bg-inverse-deep: var(--color-navy-900);
-  --bg-accent-soft:  var(--color-aqua-50);
-  --bg-accent:       var(--color-aqua);
+  --bg-canvas:      var(--color-white);
+  --bg-subtle:      var(--color-grey-50);
+  --bg-muted:       var(--color-grey-100);
+  --bg-accent-soft: var(--color-aqua-50);
+  --bg-accent:      var(--color-aqua);
 
   /* ── Foreground / text ──────────────────────────────────── */
   --fg-1:          var(--color-navy-900);
   --fg-2:          var(--color-grey-800);
   --fg-3:          var(--color-grey-600);
   --fg-4:          var(--color-grey-400);
-  --fg-on-dark:    var(--color-white);
-  --fg-on-dark-2:  rgba(255,255,255,0.72);
-  --fg-on-dark-3:  rgba(255,255,255,0.48);
   --fg-link:       var(--color-navy);
   --fg-link-hover: var(--color-aqua-700);
   --fg-accent:     var(--color-aqua-700);
@@ -31,5 +27,49 @@
   --border-default: var(--color-grey-300);
   --border-strong:  var(--color-grey-600);
   --border-accent:  var(--color-aqua);
-  --border-on-dark: rgba(255,255,255,0.16);
+}
+
+[data-theme="dark"] {
+  /* ── Surfaces ───────────────────────────────────────────── */
+  --bg-canvas:      var(--color-grey-900);
+  --bg-subtle:      var(--color-grey-800);
+  --bg-muted:       var(--color-grey-700);
+  --bg-accent-soft: rgba(50,203,237,0.12);
+  --bg-accent:      var(--color-aqua);
+
+  /* ── Foreground / text ──────────────────────────────────── */
+  --fg-1:          var(--color-white);
+  --fg-2:          rgba(255,255,255,0.88);
+  --fg-3:          rgba(255,255,255,0.72);
+  --fg-4:          rgba(255,255,255,0.48);
+  --fg-link:       var(--color-light-aqua);
+  --fg-link-hover: var(--color-aqua);
+  --fg-accent:     var(--color-aqua);
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --border-subtle:  rgba(255,255,255,0.10);
+  --border-default: var(--color-grey-700);
+  --border-strong:  var(--color-grey-400);
+  --border-accent:  var(--color-aqua);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-canvas:      var(--color-grey-900);
+    --bg-subtle:      var(--color-grey-800);
+    --bg-muted:       var(--color-grey-700);
+    --bg-accent-soft: rgba(50,203,237,0.12);
+    --bg-accent:      var(--color-aqua);
+    --fg-1:          var(--color-white);
+    --fg-2:          rgba(255,255,255,0.88);
+    --fg-3:          rgba(255,255,255,0.72);
+    --fg-4:          rgba(255,255,255,0.48);
+    --fg-link:       var(--color-light-aqua);
+    --fg-link-hover: var(--color-aqua);
+    --fg-accent:     var(--color-aqua);
+    --border-subtle:  rgba(255,255,255,0.10);
+    --border-default: var(--color-grey-700);
+    --border-strong:  var(--color-grey-400);
+    --border-accent:  var(--color-aqua);
+  }
 }
