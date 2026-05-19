@@ -139,16 +139,50 @@ regularFrame.layoutSizingHorizontal = 'HUG'; // throws: HUG can only be set on a
 ```
 
 ### Binding variables to fill/stroke colors
+
+There are two API paths. Use **Method A** (paint object) as the default — it
+works on every node type. Use **Method B** only when you already have a paint
+object reference from `figma.variables`.
+
+**Method A — embed `boundVariables` directly in the paint object (recommended):**
+
 ```js
-// ✅ Correct — use setBoundVariableForPaint
+// Works on FrameNode, ComponentNode, TextNode, VectorNode — everything.
 const colorVar = findVar('Brand/Navy');
+
+node.fills = [{
+  type: 'SOLID',
+  color: { r: 0.035, g: 0.294, b: 0.467 },          // fallback hex as RGB 0–1
+  boundVariables: { color: { type: 'VARIABLE_ALIAS', id: colorVar.id } },
+}];
+
+// Same pattern for strokes:
+node.strokes = [{
+  type: 'SOLID',
+  color: { r: 0.749, g: 0.796, b: 0.847 },
+  boundVariables: { color: { type: 'VARIABLE_ALIAS', id: colorVar.id } },
+}];
+```
+
+**Method B — `figma.variables.setBoundVariableForPaint` (namespace form):**
+
+```js
+// Use ONLY if node.fills[0] already exists and you have the paint reference.
 const paint = figma.variables.setBoundVariableForPaint(
   node.fills[0], 'color', colorVar
 );
 node.fills = [paint];
+```
 
-// ❌ Wrong — setBoundVariable does not work for fill color
-node.setBoundVariable('fill', colorVar);     // no effect
+**What NOT to use:**
+
+```js
+// ❌ node.setBoundVariableForPaint(...) — throws "no such property" on
+//    ComponentNode and some other node types. Unreliable across Figma versions.
+node.setBoundVariableForPaint('fills', 0, 'color', colorVar); // ← do not use
+
+// ❌ setBoundVariable does not work for fill/stroke color
+node.setBoundVariable('fill', colorVar);      // no effect
 node.setBoundVariable('fillColor', colorVar); // no effect
 ```
 
@@ -342,27 +376,52 @@ iconSet.name = 'Icon/Placeholder';
 
 ## combineAsVariants: Layout Fix
 
-`figma.combineAsVariants()` stacks all variants at position (0, 0). The
-resulting COMPONENT_SET needs layout set manually:
+`figma.combineAsVariants()` stacks **all variants at position (0, 0)** — the
+resulting COMPONENT_SET needs layout applied immediately after creation or
+every variant will overlap at the top-left corner.
+
+### Single-row sets (no wrapping)
+
+For component sets where all variants fit on one row (badges, chips, small
+tags, icon sizes, etc.):
 
 ```js
 const set = figma.combineAsVariants(variants, page);
-set.name = 'Button';
+set.name = 'MyComponent';
 
-// Enable wrap layout so variants don't overlap or extend infinitely wide
+set.layoutMode = 'HORIZONTAL';
+set.primaryAxisSizingMode = 'AUTO';   // width hugs the row of variants
+set.counterAxisSizingMode = 'AUTO';   // height hugs the tallest variant
+set.itemSpacing = 8;
+set.paddingTop = set.paddingBottom = set.paddingLeft = set.paddingRight = 16;
+```
+
+### Multi-row sets (wrapping grid)
+
+For large variant matrices (buttons with 100+ variants, full state × size × type
+grids) that need to wrap onto multiple rows:
+
+```js
+const set = figma.combineAsVariants(variants, page);
+set.name = 'MyComponent';
+
 set.layoutMode = 'HORIZONTAL';
 set.layoutWrap = 'WRAP';
 
-// IMPORTANT: primaryAxisSizingMode must be FIXED (not AUTO) for wrap to work.
-// With AUTO, all variants stay in one infinite row regardless of layoutWrap.
+// IMPORTANT: primaryAxisSizingMode must be FIXED for wrap to work.
+// With AUTO, all variants collapse into one infinite row regardless of layoutWrap.
 set.primaryAxisSizingMode = 'FIXED';
-set.resize(/* desired width */, set.height); // set a sensible fixed width
+set.resize(/* desired grid width, e.g. 900 */, set.height);
 
 set.itemSpacing = 16;           // gap between variants horizontally
 set.counterAxisSpacing = 16;    // gap between rows
 set.paddingTop = set.paddingBottom = set.paddingLeft = set.paddingRight = 16;
 set.counterAxisSizingMode = 'AUTO'; // height hugs the rows
 ```
+
+> **Rule of thumb:** Use `FIXED` + `WRAP` only when you need a grid. Use
+> `AUTO` without wrap for everything else — it's simpler and avoids the
+> "must call resize() before counterAxisSizingMode" trap.
 
 ---
 
