@@ -456,7 +456,7 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '2.1.0';
+const VERSION      = '2.2.0';
 const LAST_UPDATED = 'May 19, 2026';
 
 /* ================================================================
@@ -465,6 +465,17 @@ const LAST_UPDATED = 'May 19, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '2.2.0',
+    date: '2026-05-19',
+    type: 'minor',
+    changes: [
+      'Figma: build Phase 3d Form Inputs — Text Input, Textarea, Select, Checkbox, Radio, Toggle (all states, all spacing/color/radius variables bound)',
+      'Figma: build Phase 3e Tags & Badges — 5 colors × 2 sizes × 2 styles (Subtle/Bold), count badges, filter chips, icon slots (20 variants)',
+      'Rewrite preview/components-tags.html — full variant matrix using token variables; no hardcoded hex; Lucide icon slots; filter chips with dismiss',
+      'Add sync/FEATURE-component-sync.md — roadmap for extending figma-to-repo sync to cover components, not just tokens',
+    ],
+  },
   {
     version: '2.1.0',
     date: '2026-05-19',
@@ -774,7 +785,7 @@ const SECTIONS = [
   {
     id: 'tags', group: 'Components', icon: 'tag',
     label: 'Tags & Badges',
-    desc: 'Status tags (dot + label), category badges, and count pills.',
+    desc: 'Status tags in Subtle and Bold styles across Success, Warning, Error, Info, and Neutral. Two sizes (SM/MD), dot indicators, Lucide icon slots, count badges, and filter chips. All colors sourced from <code>--color-{status}-{scale}</code> tokens.',
     cols: 1,
     cards: [
       { src: 'preview/components-tags.html', label: 'Tags & badges' },
