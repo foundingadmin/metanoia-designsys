@@ -115,6 +115,15 @@ body {
   font-size: var(--fs-13); color: var(--fg-3);
   line-height: var(--lh-relaxed); margin-bottom: 20px; max-width: 56em;
 }
+.section-desc code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-muted);
+  color: var(--color-navy-500);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
 
 /* ── Card grid ── */
 .card-grid { display: grid; gap: 14px; }
@@ -382,11 +391,11 @@ body {
 
     <!-- Stats strip -->
     <div class="ds-stats">
-      <div class="ds-stat"><span class="ds-stat-num">80+</span><span class="ds-stat-label">Design tokens</span></div>
+      <div class="ds-stat"><span class="ds-stat-num">141</span><span class="ds-stat-label">Design tokens</span></div>
+      <div class="ds-stat"><span class="ds-stat-num">5</span><span class="ds-stat-label">Token layers</span></div>
       <div class="ds-stat"><span class="ds-stat-num">13</span><span class="ds-stat-label">Components</span></div>
-      <div class="ds-stat"><span class="ds-stat-num">26</span><span class="ds-stat-label">Preview cards</span></div>
+      <div class="ds-stat"><span class="ds-stat-num">27</span><span class="ds-stat-label">Preview cards</span></div>
       <div class="ds-stat"><span class="ds-stat-num">1</span><span class="ds-stat-label">Typeface (Figtree)</span></div>
-      <div class="ds-stat"><span class="ds-stat-num">3</span><span class="ds-stat-label">Brand colors</span></div>
     </div>
 
     <!-- Sections rendered by JS -->
@@ -396,7 +405,7 @@ body {
     <section class="ds-section" id="changelog" style="scroll-margin-top:84px;">
       <p class="section-eyebrow">Reference</p>
       <h2 class="section-heading">Changelog</h2>
-      <p class="section-desc">Version history for the Metanoia Design System. Follow version rules in CLAUDE.md when making updates.</p>
+      <p class="section-desc">Version history for the Metanoia Design System. Token file splits and new token categories are MINOR bumps; value-only changes are PATCH; breaking renames are MAJOR.</p>
       <div id="changelog-root"></div>
     </section>
 
@@ -410,7 +419,7 @@ body {
    VERSION — update these two constants when bumping a release.
    Then add an entry to CHANGELOG below.
    ================================================================ */
-const VERSION      = '1.5.0';
+const VERSION      = '1.5.1';
 const LAST_UPDATED = 'May 19, 2026';
 
 /* ================================================================
@@ -419,6 +428,18 @@ const LAST_UPDATED = 'May 19, 2026';
    Keep newest first.
    ================================================================ */
 const CHANGELOG = [
+  {
+    version: '1.5.1',
+    date: '2026-05-19',
+    type: 'patch',
+    changes: [
+      'Add Motion preview card — easing curve demos (hover to play) + duration tier bars (Play all button)',
+      'Update stats strip: 141 design tokens, 5 token layers, 27 preview cards',
+      'Update section descriptions to reference atomic token files (tokens/color-primitives.css, tokens/color-semantic.css, tokens/typography.css, tokens/spacing.css, tokens/motion.css)',
+      'Update Colors section card labels to distinguish Primitives from Semantic roles',
+      'Add inline code styling in section descriptions',
+    ],
+  },
   {
     version: '1.5.0',
     date: '2026-05-19',
@@ -610,19 +631,19 @@ const SECTIONS = [
   {
     id: 'colors', group: 'Foundations', icon: 'palette',
     label: 'Colors',
-    desc: 'Primary brand palette, tints, cool-grey scale, and semantic status colors. All defined as CSS custom properties in colors_and_type.css.',
+    desc: 'Two-tier color architecture: raw hex primitives (brand palette, navy/aqua/grey/status scales) in <code>tokens/color-primitives.css</code>, and semantic role aliases (bg, fg, border) in <code>tokens/color-semantic.css</code>. Always reference semantic tokens in components — never primitives directly.',
     cols: 2,
     cards: [
-      { src: 'preview/colors-primary.html',  label: 'Primary palette' },
-      { src: 'preview/colors-tints.html',    label: 'Tints & supporting' },
-      { src: 'preview/colors-neutrals.html', label: 'Cool-grey scale' },
-      { src: 'preview/colors-semantic.html', label: 'Semantic / status' },
+      { src: 'preview/colors-primary.html',  label: 'Primitives — brand' },
+      { src: 'preview/colors-tints.html',    label: 'Primitives — tints & scales' },
+      { src: 'preview/colors-neutrals.html', label: 'Primitives — cool-grey scale' },
+      { src: 'preview/colors-semantic.html', label: 'Semantic roles & status' },
     ],
   },
   {
     id: 'typography', group: 'Foundations', icon: 'type',
     label: 'Typography',
-    desc: 'One typeface — Figtree (variable, 300–900 weight). Type scale, semantic roles, line-height, and wordmark casing rules.',
+    desc: 'One typeface — Figtree (variable, 300–900 weight). Size scale, semantic roles, line-height, and wordmark casing rules. Tokens in <code>tokens/typography.css</code>; utility classes (.t-h1, .t-body, etc.) in <code>typography-utilities.css</code>.',
     cols: 1,
     cards: [
       { src: 'preview/type-display.html',  label: 'Display & headings' },
@@ -632,13 +653,22 @@ const SECTIONS = [
   },
   {
     id: 'spacing', group: 'Foundations', icon: 'ruler',
-    label: 'Spacing & Layout',
-    desc: '4px grid base. Spacing scale, border-radius ramp, and navy-tinted shadow stack.',
+    label: 'Spacing & Shape',
+    desc: '4px grid base with a 14-step space scale, 7-step border-radius ramp, 6-step navy-tinted shadow stack, and three layout container widths. All in <code>tokens/spacing.css</code>.',
     cols: 3,
     cards: [
-      { src: 'preview/spacing-scale.html',   label: 'Spacing scale' },
+      { src: 'preview/spacing-scale.html',   label: 'Space scale' },
       { src: 'preview/spacing-radii.html',   label: 'Border radii' },
       { src: 'preview/spacing-shadows.html', label: 'Shadow stack' },
+    ],
+  },
+  {
+    id: 'motion', group: 'Foundations', icon: 'activity',
+    label: 'Motion',
+    desc: 'Three duration tiers (120 / 200 / 320ms) and three easing curves. No bounces or spring overshoots. Hover the easing demos to preview each curve; click Play to run the duration bars. Tokens in <code>tokens/motion.css</code>.',
+    cols: 1,
+    cards: [
+      { src: 'preview/motion.html', label: 'Easing & duration' },
     ],
   },
   {
@@ -653,7 +683,7 @@ const SECTIONS = [
   {
     id: 'logos', group: 'Foundations', icon: 'image',
     label: 'Logos',
-    desc: 'Brandmark and lockups. The interlocking M is the only geometric motif. The wordmark "metanoia" is always lowercase Figtree Black.',
+    desc: 'Brandmark and lockups. The interlocking M is the only geometric motif. The wordmark "metanoia" is always lowercase Figtree Bold.',
     cols: 2,
     cards: [
       { src: 'preview/logo-brandmark.html', label: 'Brandmark' },

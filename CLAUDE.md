@@ -66,7 +66,7 @@ This system uses **Semantic Versioning**: `MAJOR.MINOR.PATCH`
    ```
 3. Commit: `chore: bump to vX.Y.Z — <one-line summary>`
 
-Current version: **v1.5.0**
+Current version: **v1.5.1**
 
 ## Adding a new preview card
 
