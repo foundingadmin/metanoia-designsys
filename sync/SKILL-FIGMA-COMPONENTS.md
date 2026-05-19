@@ -1,7 +1,7 @@
 ---
 name: figma-component-build
 description: >
-  Use this skill when building or rebuilding Figma components from the Metanoia
+  Use this skill when building or rebuilding Figma components from this
   design system repo. Covers the exact Figma Plugin API patterns, known gotchas,
   build order, variable binding patterns, and script structure required to
   generate a correct, variable-bound component set on the first attempt.
@@ -11,9 +11,9 @@ user-invocable: true
 ---
 
 # Figma Component Build Skill
-## Metanoia Design System — Code-to-Figma Reference
+## Design System — Code-to-Figma Reference
 
-This skill captures every lesson learned from building the Button component set
+This skill captures every lesson learned from building a Button component set
 in Figma from repo CSS tokens. Follow these rules exactly to avoid the errors
 that were hit in practice.
 
