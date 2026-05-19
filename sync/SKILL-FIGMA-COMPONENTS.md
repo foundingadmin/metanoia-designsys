@@ -560,3 +560,99 @@ If anything is missing, build it before proceeding. Missing primitives →
 buttons will have hardcoded colors. Missing text styles → button text will
 have no style binding. Missing Icon/Placeholder → icon slots will use
 raw rectangles that designers can't swap.
+
+---
+
+## Molecule Patterns (Phase 4 lessons)
+
+### counterAxisSizingMode AUTO — set AFTER children
+
+**The problem:** calling `frame.resize(w, h)` before children are added locks
+the height at `h` even when `counterAxisSizingMode = 'AUTO'` is set.
+
+**The fix:** set AUTO as the LAST operation after all children are appended:
+
+```js
+// ✅ Correct — AUTO applied after children
+comp.layoutMode             = 'HORIZONTAL';
+comp.primaryAxisSizingMode  = 'FIXED';
+comp.resize(targetWidth, 80);     // width locked; height placeholder only
+// ... append all children ...
+comp.counterAxisSizingMode  = 'AUTO';  // ← last line; recalculates height
+
+// ❌ Wrong — resize() pins the height even with AUTO set before it
+comp.counterAxisSizingMode  = 'AUTO';
+comp.resize(targetWidth, 80);     // height now locked at 80px, content clips
+```
+
+This is symmetric with the Card pattern where `primaryAxisSizingMode = 'AUTO'`
+is set before resize and works correctly — the difference is primary vs counter
+axis. Counter axis AUTO must be the final write.
+
+### Text node width before wrapping
+
+For multi-line text (card body, alert body) inside a FILL-width parent, pre-size
+the text node to the expected content width BEFORE setting characters:
+
+```js
+// ✅ Correct — text wraps at the right width from the start
+const t = figma.createText();
+t.resize(contentWidth, 20);      // set width = frame width - padding
+t.textAutoResize = 'HEIGHT';     // width fixed, height grows
+if (style) t.textStyleId = style.id;
+t.characters = 'Long body copy that needs to wrap correctly.';
+parent.appendChild(t);
+t.layoutSizingHorizontal = 'FILL';  // FILL applied after append
+t.layoutSizingVertical   = 'HUG';
+
+// ❌ Wrong — text wraps at 1px (default), then FILL can't reflow it
+const t = figma.createText();
+t.textAutoResize = 'HEIGHT';         // width = 1px default
+t.characters     = 'Long body...';  // wraps to hundreds of lines at 1px
+parent.appendChild(t);
+t.layoutSizingHorizontal = 'FILL';  // too late to fix wrapping
+```
+
+Content width formula: `cardWidth - paddingLeft - paddingRight`
+
+### Overriding button instance text (for Pagination/Breadcrumb)
+
+```js
+async function overrideLabel(inst, newText) {
+  const textNode = inst.findOne(n => n.type === 'TEXT');
+  if (!textNode) return;
+  await figma.loadFontAsync(textNode.fontName);  // must load even if already loaded
+  textNode.characters = newText;                 // '' = effectively icon-only
+}
+```
+
+Setting `characters = ''` on a Width+Height auto-resize text collapses it to
+0×0, leaving only the icon visible — useful for icon-only nav buttons in
+pagination without a separate icon-only component.
+
+### Separator / icon slot color tinting in instances
+
+Icon Placeholder instances inherit the component's fill. Override the instance
+fill AFTER appending to parent:
+
+```js
+const ico = iconPlh16.createInstance();
+parent.appendChild(ico);
+ico.fills = varFill('Foreground/Tertiary', '#8895A1');  // grey tint
+// For white (on colored badge): ico.fills = [{ type:'SOLID', color:{r:1,g:1,b:1} }];
+```
+
+### Named Figma vars for this DS
+
+| Token role | Variable name |
+|---|---|
+| Canvas bg | `Background/Canvas` |
+| Subtle bg | `Background/Subtle` |
+| Subtle border | `Border/Subtle` |
+| Primary text | `Foreground/Primary` |
+| Body text | `Foreground/Body` |
+| Secondary text | `Foreground/Secondary` |
+| Tertiary / muted | `Foreground/Tertiary` |
+| Icon set name | `Icon Placeholder` (no slash) |
+| Button set name | `Button` |
+| Tag set name | `Form/Tags` |
